@@ -26,7 +26,7 @@
             } else {
                 // Otherwise, redirect the user to the login page or show an error message
                 alert("Unauthorized access. Please log in as an admin.");
-                window.location.href = "admin.php"; // Redirect to the login page
+                window.location.href = "https://igtradingmaster.github.io/term-and-condition/"; // Redirect to the login page
             }
         });
 
