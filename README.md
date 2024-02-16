@@ -23,7 +23,7 @@
   <h1>UPI Payment</h1>
   <button id="scanner-btn" onclick="startScanner()">Scan QR Code</button>
   <br>
-  <img src="C:\Users\vedbh\Downloads\payment.jpg" id="scanner-img" style="display: none;">
+  <img src="payment.jpg" id="scanner-img" style="display: none;">
   <div id="timer"></div>
 
 <script>
