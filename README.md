@@ -1,719 +1,383 @@
-<?php
-session_start();
-
-// Check if shutdown signal is received
-if(isset($_POST['shutdown']) && $_POST['shutdown'] == 'yes') {
-    $_SESSION['shutdown'] = true;
-} elseif(isset($_POST['shutdown']) && $_POST['shutdown'] == 'no') {
-    unset($_SESSION['shutdown']);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 9999;
-            color: white;
-        }
-       
-        .container {
-            transition: filter 0.3s ease;
-        }
-        .popup-overlay {
-            background-color: rgba(0, 0, 0, 0.5);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9998;
-            display: none;
-        }
-        body {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Market Website</title>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: silver;
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
 
-    #formContainer {
-      text-align: center;
-    }
-
-    form {
-      background-color: #fff;
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
     }
 
-    input {
-      width: calc(100% - 20px);
+    .trade-prices {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
       padding: 10px;
-      margin-bottom: 10px;
-      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    button {
-      background-color: #4caf50;
-      color: white;
+    .trade-price {
+      flex: 1 1 200px; /* Adjust this value as needed */
+      border: 1px solid #ccc;
+      border-radius: 5px;
       padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .trade-price strong {
+      margin-bottom: 5px;
+    }
+
+    .btn {
+      padding: 6px 10px;
+      font-size: 14px;
+      cursor: pointer;
       border: none;
       border-radius: 4px;
-      cursor: pointer;
-      margin-right: 5px;
+      background-color: #007bff;
+      color: #fff;
+      margin-top: 5px;
     }
 
-    button:hover {
-      background-color: #45a049;
+    .btn:hover {
+      background-color: #0056b3;
     }
 
-    .error {
+    .profit {
+      color: green;
+    }
+
+    .loss {
       color: red;
     }
 
-    #actionButtons {
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
       display: flex;
-      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
     }
 
-    #profileLogo {
+    .modal-header h5 {
+      margin: 0;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    .close {
       cursor: pointer;
-      margin-left: 20px;
     }
 
-    #profileContainer,
-    #editProfileContainer,
-    #shareInviteContainer {
-      display: none;
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
-    #counts {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    #counts p {
-      margin: 5px;
-    }
-    #status {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #333;
-}
-#onlineUsersContainer {
-      display: none;
-      margin-top: 20px;
-    }
-
-    #onlineUsersList {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    #onlineUsersList li {
-      margin-bottom: 5px;
-    }
-    header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        main {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 1rem;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .app-info {
-            margin-bottom: 1rem;
-        }
-
-        .reviews {
-            margin-bottom: 1rem;
-        }
-
-        .advertisement {
-            text-align: center;
-            margin-bottom: 1rem;
-            background-color: #ddd;
-            padding: 1rem;
-        }
-
-        .product {
-            margin-bottom: 1rem;
-        }
-
-        .download-button {
-            text-align: center;
-            margin-top: 1rem;
-        }
-    </style>
-    <script>
-   document.addEventListener("DOMContentLoaded", function () {
-      setInitialReferralCode();
-
-      function setInitialReferralCode() {
-        // Retrieve referral code from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const referralCodeParam = urlParams.get('ref');
-
-        // Use the referral code from URL if present; otherwise, generate a new one
-        const referralCode = referralCodeParam || generateUserId();
-
-        // Set the referral code in local storage
-        localStorage.setItem("referralCode", referralCode);
-
-        // Show or hide the referral message based on the presence of a referral code
-        const referralMessage = document.getElementById("referralMessage");
-        const referralCodeBox = document.getElementById("referralCodeBox");
-
-        if (referralCodeParam) {
-          referralMessage.innerText = `Your Referral Code: ${referralCode}`;
-          referralCodeBox.innerText = referralCode;
-          referralCodeBox.style.display = "inline-block"; // Show the referral code box
-        } else {
-          referralMessage.innerText = "You don't have a referral code.";
-          referralCodeBox.innerText = ""; // Clear the referral code box
-          referralCodeBox.style.display = "none"; // Hide the referral code box
-        }
-      }
-
-      function generateUserId() {
-        return '_' + Math.random().toString(36).substr(2, 9);
-      }
-    });
-    
-    function register() {
-      var mobileNumber = document.getElementById("mobileNumber").value;
-      var name = document.getElementById("name").value;
-      var password = document.getElementById("password").value;
-      var backupCode = document.getElementById("backupCode").value;
-      var email = document.getElementById("email").value;
-
-      // Validate input
-      var mobileNumberPattern = /^\d{10}$/;
-      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (!mobileNumberPattern.test(mobileNumber)) {
-        alert("Please enter a 10-digit mobile number.");
-        return;
-      }
-
-      if (!name) {
-        alert("Please enter your name.");
-        return;
-      }
-
-      if (!password || password.length !== 8) {
-        alert("Please enter a valid 8-digit password.");
-        return;
-      }
-
-      if (!backupCode || backupCode.length !== 12 || !/^\d+$/.test(backupCode)) {
-        alert("Please enter a 12-digit numeric backup code.");
-        return;
-      }
-
-      if (!emailPattern.test(email)) {
-        alert("Please enter a valid email address.");
-        return;
-      }
-
-      // Retrieve existing users or initialize an empty array
-      var users = JSON.parse(localStorage.getItem("users")) || [];
-
-      // Check if the backup code, mobile number, or email is already taken
-      if (users.some(user => user.mobileNumber === mobileNumber)) {
-        alert("This Mobile Number is already taken. Please try a different Mobile Number.");
-        return;
-      }
-      if (users.some(user => user.backupCode === backupCode)) {
-        alert("This backup code is already taken. Please try a different backup code.");
-        return;
-      }
-      if (users.some(user => user.email === email)) {
-        alert("This Email is already taken. Please try a different Email.");
-        return;
-      }
-
-      // Set the referral code in local storage
-      localStorage.setItem("referralCode", generateUserId());
-
-      // Generate a unique user ID
-      var userId = generateUserId();
-
-      // Add the new user to the array
-      users.push({
-        userId: userId,
-        mobileNumber: mobileNumber,
-        name: name,
-        password: password,
-        backupCode: backupCode,
-        email: email
-      });
-
-      // Store the updated users array in localStorage
-      localStorage.setItem("users", JSON.stringify(users));
-
-      // Set expiration time (1 hour in milliseconds)
-      var expirationTime = new Date().getTime() + 3600000;
-      localStorage.setItem("expirationTime", expirationTime);
-
-      // Reset error message
-      document.getElementById("error").innerText = "";
-
-      // Redirect to login form
-      showLogin();
-    }
-
-    function login() {
-      var loginMobileNumber = document.getElementById("loginMobileNumber").value;
-      var loginPassword = document.getElementById("loginPassword").value;
-      var loginBackupCode = document.getElementById("loginBackupCode").value;
-
-      // Validate input
-      if (!loginMobileNumber) {
-        alert("Please enter your mobile number.");
-        return;
-      }
-
-      if (!loginPassword) {
-        alert("Please enter your password.");
-        return;
-      }
-
-      if (!loginBackupCode) {
-        alert("Please enter your backup code.");
-        return;
-      }
-
-      // Retrieve existing users
-      var users = JSON.parse(localStorage.getItem("users")) || [];
-
-      // Find the user with the provided mobile number
-      var user = users.find(u => u.mobileNumber === loginMobileNumber);
-
-      // Validate login credentials
-      if (user && user.password === loginPassword && user.backupCode === loginBackupCode) {
-        // Reset error message
-        document.getElementById("loginError").innerText = "";
-
-        // Redirect to profile page
-        showProfile(user);
-
-        // Show congratulations alert
-        alert("Congratulations! Your login was successful. Your ID: " + user.userId);
-      } else {
-        document.getElementById("loginError").innerText = "Invalid mobile number, password, or backup code!!, Please Register And Login.";
-      }
-    }
-
-    function checkExpiration() {
-      var expirationTime = localStorage.getItem("expirationTime");
-      if (expirationTime && new Date().getTime() > parseInt(expirationTime)) {
-        // Clear stored data if it has expired
-        localStorage.removeItem("users");
-        localStorage.removeItem("expirationTime");
-      }
-    }
-    var isLoggedIn = false; // Variable to track login status
-
-    function showLogin() {
-      
-      // Check for expiration before showing the login form
-      checkExpiration();
-
-      document.getElementById("registrationSection").style.display = "none";
-      document.getElementById("loginSection").style.display = "block";
-      document.getElementById("profileContainer").style.display = "none";
-      document.getElementById("editProfileContainer").style.display = "none";
-      document.getElementById("shareInviteContainer").style.display = "none";
-
-      // Update login status
-    isLoggedIn = false;
-    }
-
-    function showRegister() {
-      document.getElementById("loginSection").style.display = "none";
-      document.getElementById("registrationSection").style.display = "block";
-      document.getElementById("profileContainer").style.display = "none";
-      document.getElementById("editProfileContainer").style.display = "none";
-      document.getElementById("shareInviteContainer").style.display = "none";
-    }
-
-    function generateUserId() {
-      return '_' + Math.random().toString(36).substr(2, 9);
-    }
-
-    function showProfile(user) {
-    
-      document.getElementById("registrationSection").style.display = "none";
-      document.getElementById("loginSection").style.display = "none";
-      document.getElementById("profileContainer").style.display = "block";
-      document.getElementById("editProfileContainer").style.display = "none";
-      document.getElementById("shareInviteContainer").style.display = "none";
-
-      // Display user information in the profile section
-      document.getElementById("profileUserId").innerText = "User ID: " + user.userId;
-      document.getElementById("profileMobileNumber").innerText = "Mobile Number: " + user.mobileNumber;
-      document.getElementById("profileName").innerText = "Name: " + user.name;
-      document.getElementById("profilePassword").innerText = "Password: " + user.password;
-      document.getElementById("profileBackupCode").innerText = "Backup Code: " + user.backupCode;
-      document.getElementById("profileEmail").innerText = "Email: " + user.email;
-
-      // Show the "Edit" and "Close" buttons
-  document.getElementById("editButton").style.display = "block";
-  document.getElementById("closeButton").style.display = "block";
-
-      // Set the user's status to "online"
-    document.getElementById("status").innerText = "Status: Online";
-
-     // Update login status
-     isLoggedIn = true;
-    }
-
-    function editProfile() {
-      // Hide the profile section and show the edit profile section
-      document.getElementById("profileContainer").style.display = "none";
-      document.getElementById("editProfileContainer").style.display = "block";
-
-      // Populate the edit profile fields with current values
-      var user = getCurrentUser();
-      document.getElementById("editUserId").value = user.userId;
-      document.getElementById("editMobileNumber").value = user.mobileNumber;
-      document.getElementById("editName").value = user.name;
-      document.getElementById("editPassword").value = user.password;
-      document.getElementById("editBackupCode").value = user.backupCode;
-      document.getElementById("editEmail").value = user.email;
-    }
-    
-
-  // Function to handle page load
-  function onPageLoad() {
-    // Check if the URL has a 'ref' parameter
-    var referredBy = getQueryParameter('ref');
-    if (referredBy) {
-      // Update the totalInvited count if the user was referred
-      addToReferredUsersTable({ userId: 'NewUser', name: 'New User' }); // Replace with actual user data
-    }
-    // Hide the close button during editing
-  document.getElementById("closeButton").style.display = "none";
-
-    // Set the user's referral code and totalInvited count
-    document.getElementById("referralCode").innerText = userReferralCode;
-    updateTotalInvited();
-  }
-
-
-    function saveEditedProfile() {
-      var editedUserId = document.getElementById("editUserId").value;
-      var editedMobileNumber = document.getElementById("editMobileNumber").value;
-      var editedName = document.getElementById("editName").value;
-      var editedPassword = document.getElementById("editPassword").value;
-      var editedBackupCode = document.getElementById("editBackupCode").value;
-      var editedEmail = document.getElementById("editEmail").value;
-
-      // Retrieve existing users
-      var users = JSON.parse(localStorage.getItem("users")) || [];
-
-      // Find the user with the provided user ID
-      var userIndex = users.findIndex(u => u.userId === editedUserId);
-
-      // Update the user's information
-      if (userIndex !== -1) {
-        users[userIndex].mobileNumber = editedMobileNumber;
-        users[userIndex].name = editedName;
-        users[userIndex].password = editedPassword;
-        users[userIndex].backupCode = editedBackupCode;
-        users[userIndex].email = editedEmail;
-
-        // Store the updated users array in localStorage
-        localStorage.setItem("users", JSON.stringify(users));
-
-        // Show the profile section with the updated information
-        showProfile(users[userIndex]);
-
-        // Show a success message
-        alert("Your profile has been updated successfully.");
-      }
-    }
-
-    function getCurrentUser() {
-      var userId = document.getElementById("profileUserId").innerText.split(":")[1].trim();
-      var users = JSON.parse(localStorage.getItem("users")) || [];
-      return users.find(u => u.userId === userId);
-    }
-
-    function addToOnlineUsersList(user) {
-      var onlineUsersList = document.getElementById("onlineUsersList");
-      var listItem = document.createElement("li");
-      listItem.innerText = "ID: " + user.userId + ", Name: " + user.name;
-      onlineUsersList.appendChild(listItem);
-    }
-
-    function logout() {
-      // Set the user's status to "offline"
-    document.getElementById("status").innerText = "Status: Offline";
-
-      // Clear stored data when the user logs out
-      localStorage.removeItem("users");
-      localStorage.removeItem("expirationTime");
-
-      function removeUserFromOnlineUsersList() {
-      var onlineUsersList = document.getElementById("onlineUsersList");
-      onlineUsersList.innerHTML = ""; // Clear the online users list
-    }
-    function listOnlineUsers() {
-      var onlineUsersContainer = document.getElementById("onlineUsersContainer");
-
-      // Toggle the display of the online users container
-      if (onlineUsersContainer.style.display === "none") {
-        onlineUsersContainer.style.display = "block";
-        populateOnlineUsersList();
-      } else {
-        onlineUsersContainer.style.display = "none";
-      }
-    }
-
-    function populateOnlineUsersList() {
-      // Retrieve existing users
-      var users = JSON.parse(localStorage.getItem("users")) || [];
-
-      // Filter online users (you may need to adjust this based on your user status)
-      var onlineUsers = users.filter(user => user.status === "online");
-
-      // Clear and populate the online users list
-      var onlineUsersList = document.getElementById("onlineUsersList");
-      onlineUsersList.innerHTML = "";
-
-      onlineUsers.forEach(user => {
-        var listItem = document.createElement("li");
-        listItem.innerText = "ID: " + user.userId + ", Name: " + user.name;
-        onlineUsersList.appendChild(listItem);
-      });
-    }
-
-      // Redirect to login form
-      showLogin();
-    }
-
-    function showAdminPage() {
-      window.location.href = "colorprediction.html";
-    }
-
-    function showShareInvite() {
-      // Display the "Share & Invite" container
-      document.getElementById("shareInviteContainer").style.display = "block";
-
-      // Generate and display the referral code
-      var referralCode = getCurrentUser().userId;
-      document.getElementById("referralCode").innerText = referralCode;
-
-      // Display the referral link
-      document.getElementById("referralLink").style.display = "block";
-       document.getElementById("closeButton").style.display = "block";
-    }
-
-    function copyReferralLink() {
-      var baseUrl = "https://igtradingmaster.github.io/LOGIN/";
-      var referralCode = getCurrentUser().userId;
-
-      // Append the referral code to the URL
-      var fullUrl = baseUrl + "?ref=" + referralCode;
-
-      // You can use Clipboard API to copy the link to the clipboard
-      navigator.clipboard.writeText(fullUrl)
-        .then(() => alert("Referral Link copied: " + fullUrl))
-        .catch((err) => console.error("Unable to copy to clipboard: ", err));
-    }
-
-    function addToReferredUsersTable(user) {
-      var table = document.getElementById("referredUsersTable");
-
-      // Create a new row
-      var newRow = table.insertRow(-1);
-
-      // Insert cells with user data
-      var userIdCell = newRow.insertCell(0);
-      var nameCell = newRow.insertCell(1);
-      var mobileNumberCell = newRow.insertCell(2);
-      var emailCell = newRow.insertCell(3);
-      var backupCodeCell = newRow.insertCell(4);
-
-      // Populate cells with user data
-      userIdCell.innerHTML = user.userId;
-      nameCell.innerHTML = user.name;
-      mobileNumberCell.innerHTML = user.mobileNumber;
-      emailCell.innerHTML = user.email;
-      backupCodeCell.innerHTML = user.backupCode;
-    }
-    let totalInvited = 0;
-  let userReferralCode = '';
-  function closeProfile() {
-  document.getElementById("profileContainer").style.display = "none";
-}
-function searchUser() {
-  var searchUserName = document.getElementById("searchUserName").value;
-  var users = JSON.parse(localStorage.getItem("users")) || [];
-
-  // Find the user with the provided name
-  var user = users.find(u => u.name.toLowerCase() === searchUserName.toLowerCase());
-
-  // Display the search result
-  var searchResultContainer = document.getElementById("searchResult");
-
-}
-// Function to handle admin access with a specific URL
-function adminAccess() {
-  // Get the user ID from the URL parameter
-  const urlParams = new URLSearchParams(window.location.search);
-  const userId = urlParams.get('userId');
-
-  // Retrieve users from local storage
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-
-  // Find the user by ID
-  const user = users.find(u => u.userId === userId);
-
-  if (user) {
-    // Display user data
-    alert(`User Data:\nID: ${user.userId}\nName: ${user.name}\nPassword: ${user.password}\nBackup Code: ${user.backupCode}`);
-  } else {
-    alert("User not found.");
-  }
-}
-
-  </script>
-</head>
-
-<body onload="showLogin()">
-  <div id="formContainer">
-    <form>
-      <div id="actionButtons">
-        <button type="button" onclick="showRegister()">Register</button>
-        <button type="button" onclick="showLogin()">Login</button>
-        <div id="profileLogo" data-toggle="modal" data-target="#profileModal">&#128100; Login</div>
-      </div>
-
-      <div id="registrationSection">
-        <h2>Register</h2>
-        <input type="text" id="mobileNumber" placeholder="Mobile Number (10 digits)">
-        <input type="text" id="name" placeholder="Name">
-        <input type="password" id="password" placeholder="Password (8 digits)">
-        <input type="text" id="backupCode" placeholder="Backup Code (12 digits)">
-        <input type="text" id="email" placeholder="Email">
-        <p id="referralMessage" style="border: 10px solid silver; padding: 10px; width: 250px; display: inline-block;"></p>
-        <div id="referralCodeBox" style="border: 10px solid silver; padding: 10px; width: 250px; display: inline-block;"></div>
-        <button type="button" onclick="register()">Submit</button>
-        <p class="error" id="error"></p>
-      </div>
-
-      <div id="loginSection" style="display: none;">
-        <h2>Login</h2>
-        <input type="text" id="loginMobileNumber" placeholder="Mobile Number">
-        <input type="password" id="loginPassword" placeholder="Password">
-        <input type="text" id="loginBackupCode" placeholder="Backup Code">
-        <button type="button" onclick="login()">Login</button>
-        <p class="error" id="loginError"></p>
-      </div>
-     
-      <div id="profileContainer">
-        <h2>Profile</h2><center><button type="button" id="editButton" onclick="editProfile()">Edit Your Profile</button>  
-        <p id="profileUserId"></p>
-        <p id="profileMobileNumber"></p>
-        <p id="profileName"></p>
-        <p id="profilePassword"></p>
-        <p id="profileBackupCode"></p>
-        <p id="profileEmail"></p>
-        <p id="status">Loading...</p>
-        
-        <button type="button" id="shareInviteButton" onclick="showShareInvite()">Share & Invite</button>
-        <button type="button" onclick="logout()">Logout</button><ul></ul>
-        <center><button type="button" id="closeButton" onclick="closeProfile()">Close</button>
-      </div>
-     <!-- Add the following code inside the <body> tag, after the existing content -->
-<div id="appsContainer" style="display: none;">
-  <h2>All Apps</h2>
-  <input type="text" id="searchApp" placeholder="Search Apps" oninput="filterApps()">
-  <ul id="appList"></ul>
-</div>
-
-      
-      <div id="editProfileContainer">
-        <h2>Edit Profile</h2>
-        <input type="text" id="editUserId" disabled>
-        <input type="text" id="editMobileNumber" placeholder="Mobile Number">
-        <input type="text" id="editName" placeholder="Name">
-        <input type="password" id="editPassword" placeholder="Password (8 digits)">
-        <input type="text" id="editBackupCode" placeholder="Backup Code (12 digits)">
-        <input type="text" id="editEmail" placeholder="Email">
-        <button type="button" onclick="saveEditedProfile()">Save</button>
-      </div>
-      <div id="shareInviteContainer" style="display: none;">
-        <h2>Share & Invite</h2>
-        <p>Your Referral Code: <span id="referralCode"></span></p>
-        <p>Referral Link: https://igtradingmaster.github.io/LOGIN/?ref= <span id="fullReferralLink"></span></p>
-        <div id="referralLink" style="display: none;">
-          <button type="button" onclick="copyReferralLink()">Copy Referral Link</button> <ul></ul>
-          <p>Your total Invited: <span id="totalInvited"></span></p>
-        </div>
-      </div>
-     </form>
-</body>
-</html>
-
+  </style>
 </head>
 <body>
-    <div class="popup-overlay <?php if(isset($_SESSION['shutdown'])) echo 'd-block'; ?>"></div>
-    <div class="container mt-5 <?php if(isset($_SESSION['shutdown'])) echo 'blur'; ?>">
-        <div class="popup" id="shutdownPopup">
-            <h3>Website Closed</h3>
-            <p>Today website is closed. Come back tomorrow.</p>
-        </div>
+    
+<div class="container">
+  <center><h1> CHART</h1></center>
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <canvas id="lineChart"></canvas>
     </div>
+    <div class="col-md-6">
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <center><h2> TRADE PRICES</h2></center>
+      <div id="tradePrices" class="trade-prices"></div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <center><button class="btn" id="portfolioBtn">Portfolio</button></center>
+    </div>
+  </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            <?php if(isset($_SESSION['shutdown'])): ?>
-                $(".popup").show();
-                $(".popup-overlay").show();
-            <?php endif; ?>
+<!-- Portfolio Modal -->
+<div id="portfolioModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">User Portfolio</h5>
+      <button type="button" class="close" onclick="closePortfolioModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="portfolioContent">
+      <!-- Portfolio content will be added here -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn" onclick="closePortfolioModal()">Close</button>
+    </div>
+  </div>
+</div>
 
-            $('#shutdown').change(function() {
-                var shutdownValue = $(this).val();
-                if (shutdownValue == 'yes') {
-                    $("#shutdownPopup").show();
-                    $(".popup-overlay").show();
-                } else {
-                    $("#shutdownPopup").hide();
-                    $(".popup-overlay").hide();
-                }
-            });
-        });
-    </script>
+<!-- Popup -->
+<div id="popup" class="popup">
+  <p id="popupMessage">Hey Welcome Friends...!!</p>
+  <button class="btn" onclick="closePopup()">Close</button>
+</div>
+
+<script>
+  // Initial account balance for the user
+  let userBalance = 10000;
+  let userPortfolio = []; // Array to store user's bought stocks
+
+  // Companies and their initial trade prices
+  let companies = ['TATA', 'Reliance', 'ONGC', 'Coal India', 'Tata Motors', 'Bajaj Auto', 'HCL Technologies', 'TCS', 'Cipla', 'Bajaj Finance', 'BPCL', 'ICICI Bank', 'Infosys', 'UPL', 'Adani Ports'];
+  let tradePrices = [600, 2200, 120, 150, 300, 4000, 900, 3200, 800, 5000, 250, 700, 2100, 400, 600]; // Sample trade prices
+
+  const lineChartCanvas = document.getElementById('lineChart').getContext('2d');
+  const barChartCanvas = document.getElementById('barChart').getContext('2d');
+
+  const lineChart = new Chart(lineChartCanvas, {
+    type: 'line',
+    data: {
+      labels: companies,
+      datasets: [{
+        label: 'Stock Price',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+        data: tradePrices,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Line Chart'
+        }
+      }
+    }
+  });
+
+  const barChart = new Chart(barChartCanvas, {
+    type: 'bar',
+    data: {
+      labels: companies,
+      datasets: [{
+        label: 'Stock Volume',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        data: tradePrices, // You can update this with appropriate volume data if available
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Bar Chart'
+        }
+      }
+    }
+  });
+
+  /// Function to update trade prices with random colors
+function updateTradePrices() {
+  let tradePricesHtml = '';
+  for (let i = 0; i < companies.length; i++) {
+    let stockIndex = userPortfolio.findIndex(item => item.company === companies[i]);
+    let profitLoss = stockIndex !== -1 ? userPortfolio[stockIndex].price - tradePrices[i] : 0;
+    let profitLossClass = profitLoss >= 0 ? 'profit' : 'loss';
+
+    // Generating random color
+    let randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+
+    tradePricesHtml += `<div class="trade-price" style="border-color: ${randomColor};">
+                          <strong>${companies[i]}</strong>
+                          <p>${tradePrices[i]}</p>
+                          <span class="${profitLossClass}" style="color: ${randomColor};">${profitLoss}</span>
+                          <button class="btn btn-buy" onclick="buyStock(${i})">Buy</button>`;
+    if (stockIndex !== -1) {
+      tradePricesHtml += `<button class="btn btn-sell" onclick="sellStock(${i})">Sell</button>`;
+    }
+    tradePricesHtml += `</div>`;
+  }
+  document.getElementById('tradePrices').innerHTML = tradePricesHtml;
+}
+
+// Update trade prices with random colors every second
+setInterval(updateTradePrices, 1000);
+
+
+  // Function to update chart data (simulated for demonstration)
+  function updateChartData() {
+    // Update trade prices with random values
+    for (let i = 0; i < tradePrices.length; i++) {
+      tradePrices[i] = Math.floor(Math.random() * 5000);
+    }
+    // Update the charts
+    lineChart.data.datasets[0].data = tradePrices;
+    barChart.data.datasets[0].data = tradePrices;
+    lineChart.update();
+    barChart.update();
+
+    // Update trade prices display
+    updateTradePrices();
+  }
+
+  // Function to buy stock
+  function buyStock(index) {
+    if (userBalance >= tradePrices[index]) {
+      userBalance -= tradePrices[index];
+      userPortfolio.push({company: companies[index], price: tradePrices[index], time: new Date().toLocaleString()});
+      updateLocalStorage();
+      updateTradePrices();
+      alert(`You bought ${companies[index]} stock for ${tradePrices[index]}. Your remaining balance is ${userBalance}`);
+    } else {
+      alert('Insufficient balance to buy this stock.');
+    }
+  }
+
+  // Function to sell stock
+  function sellStock(index) {
+    let stockIndex = userPortfolio.findIndex(item => item.company === companies[index]);
+    if (stockIndex !== -1) {
+      let profitLoss = tradePrices[index] - userPortfolio[stockIndex].price;
+      if (profitLoss >= 0) {
+        userBalance += tradePrices[index];
+        userPortfolio.splice(stockIndex, 1);
+        updateLocalStorage();
+        updateTradePrices();
+        alert(`You sold ${companies[index]} stock for ${tradePrices[index]}. Your remaining balance is ${userBalance}. Profit/Loss: ${profitLoss}`);
+      } else {
+        alert(`You can't sell ${companies[index]} stock at a loss.`);
+      }
+    }
+  }
+
+  // Function to exit trade
+  function exitTrade(index) {
+    let stockIndex = userPortfolio.findIndex(item => item.company === companies[index]);
+    if (stockIndex !== -1) {
+      let profitLoss = tradePrices[index] - userPortfolio[stockIndex].price;
+      if (profitLoss >= 0) {
+        userBalance += tradePrices[index];
+        userPortfolio.splice(stockIndex, 1);
+        updateLocalStorage();
+        updateTradePrices();
+        alert(`You exited ${companies[index]} trade. Your remaining balance is ${userBalance}. Profit: ${profitLoss}`);
+      } else {
+        alert(`You can't exit ${companies[index]} trade at a loss.`);
+      }
+    }
+  }
+
+  // Function to update local storage with user portfolio data
+  function updateLocalStorage() {
+    localStorage.setItem('userPortfolio', JSON.stringify(userPortfolio));
+    localStorage.setItem('userBalance', userBalance);
+  }
+
+  // Function to display user portfolio
+  function displayPortfolio() {
+    const storedPortfolio = JSON.parse(localStorage.getItem('userPortfolio'));
+    const storedBalance = localStorage.getItem('userBalance');
+    if (storedPortfolio && storedBalance) {
+      userPortfolio = storedPortfolio;
+      userBalance = parseFloat(storedBalance);
+      let portfolioHtml = '';
+      let lossHistory = 0;
+      let profitHistory = 0;
+      userPortfolio.forEach(stock => {
+        let profitLoss = tradePrices[companies.indexOf(stock.company)] - stock.price;
+        if (profitLoss >= 0) {
+          profitHistory += profitLoss;
+        } else {
+          lossHistory += profitLoss;
+        }
+        portfolioHtml += `<div><strong>${stock.company} (${stock.time}):</strong> ${stock.price}</div>`;
+        portfolioHtml += `<div>Exit: <button class="btn btn-exit" onclick="exitTrade(${companies.indexOf(stock.company)})">Exit</button></div>`;
+      });
+      portfolioHtml += `<p>Available Balance: ${userBalance.toFixed(2)}</p>`;
+      portfolioHtml += `<p>Loss History: ${lossHistory}</p>`;
+      portfolioHtml += `<p>Profit History: ${profitHistory}</p>`;
+      document.getElementById('portfolioContent').innerHTML = portfolioHtml;
+      document.getElementById('portfolioModal').style.display = 'flex';
+    } else {
+      alert('No portfolio data found.');
+    }
+  }
+
+  // Function to close portfolio modal
+  function closePortfolioModal() {
+    document.getElementById('portfolioModal').style.display = 'none';
+  }
+
+  // Function to show popup message
+  function showPopup(message) {
+    document.getElementById('popupMessage').innerText = message;
+    document.getElementById('popup').style.display = 'block';
+  }
+
+  // Function to close popup
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+
+  // Event listener for portfolio button
+  document.getElementById('portfolioBtn').addEventListener('click', displayPortfolio);
+
+  // Update chart data every 3 seconds
+  setInterval(updateChartData, 3000);
+
+  // Initial update
+  updateTradePrices();
+</script>
+
 </body>
 </html>
