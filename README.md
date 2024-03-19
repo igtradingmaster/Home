@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,6 +6,8 @@
   <title>Stock Market Website</title>
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
     body {
       background-color: silver;
@@ -122,7 +124,54 @@
   </style>
 </head>
 <body>
-    
+<div id="profileLogo" style="position: fixed; top: 10px; right: 10px; cursor: pointer;">
+    <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" alt="Profile" width="50" height="50" onclick="showUserProfile()">
+  </div>
+</div>
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Login</h5>
+      <button type="button" class="close" onclick="closeLoginModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="loginForm" onsubmit="return loginUser()">
+        <div>
+          <label for="mobile">Mobile Number:</label>
+          <input type="text" id="mobile" required>
+        </div>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" required>
+        </div>
+        <div>
+          <label for="password">Password (8 characters, no digits):</label>
+          <input type="password" id="password" pattern="[a-zA-Z]{8}" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- User Details Modal -->
+<div id="userDetailsModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">User Details</h5>
+      <button type="button" class="close" onclick="closeUserDetailsModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="userDetailsContent">
+      <!-- User details will be displayed here -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn" onclick="editUserDetails()">Edit</button>
+    </div>
+  </div>
+</div>
+
+
 <div class="container">
   <center><h1> CHART</h1></center>
   <div class="row mt-3">
@@ -169,6 +218,117 @@
 </div>
 
 <script>
+  // JavaScript Code
+  // Variables for user data
+  let userData = {};
+
+  // Check if user is logged in
+  function checkLoggedIn() {
+    const loggedIn = localStorage.getItem('loggedIn');
+    if (!loggedIn) {
+      document.getElementById('loginModal').style.display = 'block';
+    } else {
+      loadUserData();
+    }
+  }
+
+  // Load user data from localStorage
+  function loadUserData() {
+    const savedUserData = JSON.parse(localStorage.getItem('userData'));
+    if (savedUserData) {
+      userData = savedUserData;
+    }
+  }
+
+  // Save user data to localStorage
+  function saveUserData() {
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+
+  // Login user
+  function loginUser() {
+    const mobile = document.getElementById('mobile').value;
+    const name = document.getElementById('name').value;
+    const password = document.getElementById('password').value;
+    
+    // Saving user data to localStorage
+    userData = { mobile, name, password };
+    saveUserData();
+    localStorage.setItem('loggedIn', true);
+    closeLoginModal();
+    return false; // Prevent form submission
+  }
+
+  // Show user profile
+  function showUserProfile() {
+    document.getElementById('userDetailsModal').style.display = 'block';
+    displayUserDetails();
+  }
+
+  // Display user details
+  function displayUserDetails() {
+    const userDetailsContent = document.getElementById('userDetailsContent');
+    userDetailsContent.innerHTML = `
+      <p><strong>Mobile Number:</strong> ${userData.mobile}</p>
+      <p><strong>Name:</strong> ${userData.name}</p>
+      <p><strong>Password:</strong> ${userData.password}</p>
+    `;
+  }
+
+  // Edit user details
+  function editUserDetails() {
+    const userDetailsContent = document.getElementById('userDetailsContent');
+    userDetailsContent.innerHTML = `
+      <form id="editForm" onsubmit="return saveEditedUserDetails()">
+        <div>
+          <label for="mobile">Mobile Number:</label>
+          <input type="text" id="mobile" value="${userData.mobile}" required>
+        </div>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" value="${userData.name}" required>
+        </div>
+        <div>
+          <label for="password">Password (8 characters, no digits):</label>
+          <input type="password" id="password" pattern="[a-zA-Z]{8}" value="${userData.password}" required>
+        </div>
+        <button type="submit" class="btn">Save</button>
+      </form>
+    `;
+  }
+
+  // Save edited user details
+  function saveEditedUserDetails() {
+    const mobile = document.getElementById('mobile').value;
+    const name = document.getElementById('name').value;
+    const password = document.getElementById('password').value;
+    
+    // Saving edited user data to localStorage
+    userData = { mobile, name, password };
+    saveUserData();
+    closeUserDetailsModal();
+    return false; // Prevent form submission
+  }
+
+  // Close login modal
+  function closeLoginModal() {
+    document.getElementById('loginModal').style.display = 'none';
+  }
+
+  // Close user details modal
+  function closeUserDetailsModal() {
+    document.getElementById('userDetailsModal').style.display = 'none';
+  }
+
+  // Close popup
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+
+  // Run functions when the page loads
+  window.onload = function() {
+    checkLoggedIn();
+  };
   // Initial account balance for the user
   let userBalance = 10000;
   let userPortfolio = []; // Array to store user's bought stocks
@@ -243,7 +403,7 @@ function updateTradePrices() {
                           <span class="${profitLossClass}" style="color: ${randomColor};">${profitLoss}</span>
                           <button class="btn btn-buy" onclick="buyStock(${i})">Buy</button>`;
     if (stockIndex !== -1) {
-      tradePricesHtml += `<button class="btn btn-sell" onclick="sellStock(${i})">Sell</button>`;
+      tradePricesHtml += `<button class="btn btn-sell" onclick="sellStock(${i})">Exit</button>`;
     }
     tradePricesHtml += `</div>`;
   }
@@ -258,7 +418,7 @@ setInterval(updateTradePrices, 1000);
   function updateChartData() {
     // Update trade prices with random values
     for (let i = 0; i < tradePrices.length; i++) {
-      tradePrices[i] = Math.floor(Math.random() * 5000);
+      tradePrices[i] = Math.floor(Math.random() * 11000);
     }
     // Update the charts
     lineChart.data.datasets[0].data = tradePrices;
