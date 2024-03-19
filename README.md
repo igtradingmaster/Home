@@ -127,7 +127,7 @@
 <div id="profileLogo" style="position: fixed; top: 10px; right: 10px; cursor: pointer;">
     <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" alt="Profile" width="50" height="50" onclick="showUserProfile()">
   </div>
-</div>
+
 <!-- Login Modal -->
 <div id="loginModal" class="modal">
   <div class="modal-content">
@@ -176,10 +176,10 @@
   <center><h1> CHART</h1></center>
   <div class="row mt-3">
     <div class="col-md-6">
-      <canvas id="lineChart" width="400" height="400"></canvas>
+    <canvas id="lineChart" width="400" height="400"></canvas>
     </div>
     <div class="col-md-6">
-      <canvas id="barChart" width="400" height="400"></canvas>
+    <canvas id="barChart" width="400" height="400"></canvas>
     </div>
   </div>
   <div class="row mt-3">
@@ -334,7 +334,7 @@
   let userPortfolio = []; // Array to store user's bought stocks
 
   // Companies and their initial trade prices
-  let companies = ['TATA', 'Reliance', 'ONGC', 'Coal India', 'Tata Motors', 'Bajaj Auto', 'HCL Technologies', 'TCS', 'Cipla', 'Bajaj Finance', 'BPCL', 'ICICI Bank', 'Infosys', 'UPL', 'Adani Ports'];
+  let companies = ['VOB', 'QTB', 'ADB', 'KJB', 'RTB', 'QUI', 'POB', 'PLC', 'FIP', 'BDR', 'IOC', 'BNK', 'INF', 'UPI', 'AOS'];
   let tradePrices = [600, 2200, 120, 150, 300, 4000, 900, 3200, 800, 5000, 250, 700, 2100, 400, 600]; // Sample trade prices
 
   const lineChartCanvas = document.getElementById('lineChart').getContext('2d');
@@ -389,29 +389,43 @@
   /// Function to update trade prices with random colors
 function updateTradePrices() {
   let tradePricesHtml = '';
+  let totalProfitLoss = 0; // To calculate total profit or loss
+  
+  // Loop through each company
   for (let i = 0; i < companies.length; i++) {
     let stockIndex = userPortfolio.findIndex(item => item.company === companies[i]);
     let profitLoss = stockIndex !== -1 ? userPortfolio[stockIndex].price - tradePrices[i] : 0;
+    totalProfitLoss += profitLoss;
+
     let profitLossClass = profitLoss >= 0 ? 'profit' : 'loss';
-
-    // Generating random color
-    let randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-
-    tradePricesHtml += `<div class="trade-price" style="border-color: ${randomColor};">
+    let color = profitLoss >= 0 ? 'green' : 'red';
+    
+    tradePricesHtml += `<div class="trade-price" style="border-color: ${color};">
                           <strong>${companies[i]}</strong>
                           <p>${tradePrices[i]}</p>
-                          <span class="${profitLossClass}" style="color: ${randomColor};">${profitLoss}</span>
+                          <span class="${profitLossClass}" style="color: ${color};">${profitLoss >= 0 ? '+' : '-'}${Math.abs(profitLoss)}</span>
                           <button class="btn btn-buy" onclick="buyStock(${i})">Buy</button>`;
     if (stockIndex !== -1) {
       tradePricesHtml += `<button class="btn btn-sell" onclick="sellStock(${i})">Exit</button>`;
     }
     tradePricesHtml += `</div>`;
   }
-  document.getElementById('tradePrices').innerHTML = tradePricesHtml;
-}
 
-// Update trade prices with random colors every second
-setInterval(updateTradePrices, 1000);
+  // Style the balance based on whether it's positive or negative
+  let balanceColor = userBalance >= 0 ? 'green' : 'red';
+  let balanceText = userBalance >= 0 ? '+' + userBalance.toFixed(2) : userBalance.toFixed(2);
+
+  // Update the trade prices display
+  document.getElementById('tradePrices').innerHTML = tradePricesHtml;
+  
+  // Update the available balance display
+  document.getElementById('portfolioContent').innerHTML += `<p style="color: ${balanceColor};">Available Balance: ${balanceText}</p>`;
+  
+  // Check if the user has lost all their balance
+  if (userBalance <= 0) {
+    document.getElementById('portfolioContent').innerHTML += `<p style="color: red;">You have lost all your balance.</p>`;
+  }
+}
 
 
   // Function to update chart data (simulated for demonstration)
