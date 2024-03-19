@@ -176,10 +176,10 @@
   <center><h1> CHART</h1></center>
   <div class="row mt-3">
     <div class="col-md-6">
-      <canvas id="lineChart"></canvas>
+      <canvas id="lineChart" width="400" height="400"></canvas>
     </div>
     <div class="col-md-6">
-      <canvas id="barChart"></canvas>
+      <canvas id="barChart" width="400" height="400"></canvas>
     </div>
   </div>
   <div class="row mt-3">
