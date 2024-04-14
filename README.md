@@ -10,61 +10,8 @@
 
   <style>
     body {
-      background-color: silver;
+      background-color: #f2f2f2;
       font-family: Arial, sans-serif;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .trade-prices {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      padding: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .trade-price {
-      flex: 1 1 200px; /* Adjust this value as needed */
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .trade-price strong {
-      margin-bottom: 5px;
-    }
-
-    .btn {
-      padding: 6px 10px;
-      font-size: 14px;
-      cursor: pointer;
-      border: none;
-      border-radius: 4px;
-      background-color: #007bff;
-      color: #fff;
-      margin-top: 5px;
-    }
-
-    .btn:hover {
-      background-color: #0056b3;
-    }
-
-    .profit {
-      color: green;
-    }
-
-    .loss {
-      color: red;
     }
 
     .modal {
@@ -80,17 +27,17 @@
     }
 
     .modal-content {
-      background-color: #fff;
-      border-radius: 5px;
+      background-color: #ffffff;
+      border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #cccccc;
       padding-bottom: 10px;
       margin-bottom: 10px;
     }
@@ -102,7 +49,7 @@
     .modal-footer {
       display: flex;
       justify-content: flex-end;
-      border-top: 1px solid #ccc;
+      border-top: 1px solid #cccccc;
       padding-top: 10px;
       margin-top: 10px;
     }
@@ -116,18 +63,157 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #fff;
+      background-color: #ffffff;
       padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: rgb(65, 105, 225); /* Royal Blue */
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background-color: rgb(255, 69, 0); /* Red Orange */
+      color: #ffffff;
+    }
+
+    .btn-success {
+      background-color: rgb(0, 128, 0); /* Green */
+      color: #ffffff;
+    }
+
+    .btn-warning {
+      background-color: rgb(255, 165, 0); /* Orange */
+      color: #ffffff;
+    }
+
+    .btn-info {
+      background-color: rgb(30, 144, 255); /* Dodger Blue */
+      color: #ffffff;
+    }
+
+    .btn-danger {
+      background-color: rgb(220, 20, 60); /* Crimson */
+      color: #ffffff;
+    }
+
+    .btn-light {
+      background-color: rgb(245, 245, 245); /* Silver */
+      color: #000000;
+    }
+
+    .btn-dark {
+      background-color: rgb(47, 79, 79); /* Dark Slate Gray */
+      color: #ffffff;
+    }
+    /* Additional CSS for styling user details in the user profile modal */
+#userDetailsModal {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#userDetailsContent {
+  padding: 20px;
+}
+
+#userDetailsContent p {
+  margin: 10px 0;
+}
+
+#editForm {
+  margin-top: 20px;
+}
+
+#editForm label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#editForm input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#editForm button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#editForm button[type="submit"] {
+  background-color: #007bff; /* Bootstrap Primary Color */
+  color: #ffffff;
+}
+
+#editForm button[type="submit"]:hover {
+  background-color: #0056b3; /* Darker shade of Bootstrap Primary Color */
+}
+
+.modal-footer button {
+  margin-left: 10px;
+}
+.input-group {
+  margin-bottom: 15px; /* Adjust margin between input groups */
+}
+
+.input-group label {
+  display: block;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px; /* Adjust margin between label and input */
+}
+.custom-notification {
+      position: fixed;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 300px;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #ffffff;
+      padding: 10px 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .custom-notification.show {
+      opacity: 1;
+    }
+   img{
+    width: 90px;
+    height: 90px;
+   }
   </style>
 </head>
-<body>
-<div id="profileLogo" style="position: fixed; top: 10px; right: 10px; cursor: pointer;">
-    <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" alt="Profile" width="50" height="50" onclick="showUserProfile()">
-  </div>
 
+<body>
+<img id="aiRobot" src="" AI ROBOT security alt="AI Robot">
+
+<!-- Display AI Status -->
+<div id="aiStatus" style="text-align: center;">Stable</div>
+
+<div id="profileLogo" style="position: fixed; top: 10px; right: 10px; cursor: pointer;">
+    <img src="https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png" alt="Profile" width="50" height="50" onclick="openUserProfileModal()">
+</div>
 <!-- Login Modal -->
 <div id="loginModal" class="modal">
   <div class="modal-content">
@@ -137,19 +223,19 @@
     </div>
     <div class="modal-body">
       <form id="loginForm" onsubmit="return loginUser()">
-        <div>
+        <div class="input-group">
           <label for="mobile">Mobile Number:</label>
           <input type="text" id="mobile" required>
         </div>
-        <div>
+        <div class="input-group">
           <label for="name">Name:</label>
           <input type="text" id="name" required>
         </div>
-        <div>
+        <div class="input-group">
           <label for="password">Password (8 characters, no digits):</label>
           <input type="password" id="password" pattern="[a-zA-Z]{8}" required>
         </div>
-        <button type="submit" class="btn">Login</button>
+        <button type="submit" class="btn btn-primary">Login</button>
       </form>
     </div>
   </div>
@@ -164,49 +250,28 @@
     </div>
     <div class="modal-body" id="userDetailsContent">
       <!-- User details will be displayed here -->
+      <p><strong>Name:</strong> <span id="userName"></span></p>
+      <p><strong>Mobile Number:</strong> <span id="userMobile"></span></p>
+      <div id="editForm" style="display: none;">
+        <form id="editUserForm" onsubmit="return saveEditedUserDetails()">
+          <div>
+            <label for="editName">Name:</label>
+            <input type="text" id="editName" value="">
+          </div>
+          <div>
+            <label for="editMobile">Mobile Number:</label>
+            <input type="text" id="editMobile" value="">
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+          <ul></ul>
+          <div id="barcodeContainer"></div>
+        </form>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn" onclick="editUserDetails()">Edit</button>
-    </div>
-  </div>
-</div>
-
-
-<div class="container">
-  <center><h1> CHART</h1></center>
-  <div class="row mt-3">
-    <div class="col-md-6">
-    <canvas id="lineChart" width="400" height="400"></canvas>
-    </div>
-    <div class="col-md-6">
-    <canvas id="barChart" width="400" height="400"></canvas>
-    </div>
-  </div>
-  <div class="row mt-3">
-    <div class="col-md-12">
-      <center><h2> TRADE PRICES</h2></center>
-      <div id="tradePrices" class="trade-prices"></div>
-    </div>
-  </div>
-  <div class="row mt-3">
-    <div class="col-md-12">
-      <center><button class="btn" id="portfolioBtn">Portfolio</button></center>
-    </div>
-  </div>
-</div>
-
-<!-- Portfolio Modal -->
-<div id="portfolioModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title">User Portfolio</h5>
-      <button type="button" class="close" onclick="closePortfolioModal()">&times;</button>
-    </div>
-    <div class="modal-body" id="portfolioContent">
-      <!-- Portfolio content will be added here -->
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn" onclick="closePortfolioModal()">Close</button>
+      <button type="button" class="btn btn-info" onclick="showEditForm()">Edit</button>
+      <!-- Logout Button -->
+      <button type="button" class="btn btn-danger" onclick="showLogoutConfirmation()">Logout</button>
     </div>
   </div>
 </div>
@@ -214,35 +279,182 @@
 <!-- Popup -->
 <div id="popup" class="popup">
   <p id="popupMessage">Hey Welcome Friends...!!</p>
-  <button class="btn" onclick="closePopup()">Close</button>
+  <button class="btn btn-secondary" onclick="closePopup()">Close</button>
 </div>
 
+<div id="notification" class="custom-notification"></div>
+
 <script>
-  // JavaScript Code
+    // Variable to hold AI status
+  let aiStatus = 'stable';
+
+// Update AI status function
+function updateAIStatus(newStatus) {
+  aiStatus = newStatus;
+  document.getElementById('aiStatus').textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+  updateAIRotation(); // Update AI rotation based on status
+}
+
+// Update AI rotation function
+function updateAIRotation() {
+  const aiRobot = document.getElementById('aiRobot');
+  if (aiStatus === 'turningLeft') {
+    aiRobot.style.transform = 'rotate(-15deg)';
+  } else if (aiStatus === 'turningRight') {
+    aiRobot.style.transform = 'rotate(15deg)';
+  } else {
+    aiRobot.style.transform = 'rotate(0deg)'; // Default rotation (stable)
+  }
+}
+
+// Function to toggle AI turning direction
+function toggleAITurning() {
+  if (aiStatus === 'turningLeft') {
+    updateAIStatus('turningRight');
+  } else {
+    updateAIStatus('turningLeft');
+  }
+}
+
+// Set interval to toggle AI turning direction every second
+setInterval(toggleAITurning, 1000);
+
+   // Function to periodically check login status and show notification if not logged in
+  function checkLoginStatus() {
+    const loggedIn = localStorage.getItem('loggedIn');
+    const username = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).name : '';
+    if (!loggedIn) {
+      showNotification(`Hello ${username}, you are not logged in. Please login first.`);
+    } else {
+      stopNotifications(); // Stop notifications once user is logged in
+    }
+  }
+
+  // Function to display notification
+  function showNotification(message) {
+    const notificationDiv = document.getElementById('notification');
+    notificationDiv.textContent = message;
+    notificationDiv.classList.add('show');
+
+    // Hide notification after 5 seconds
+    setTimeout(() => {
+      notificationDiv.classList.remove('show');
+    }, 5000);
+  }
+
+  // Function to stop notifications
+  function stopNotifications() {
+    clearInterval(notificationInterval);
+  }
+
+  // Run the checkLoginStatus function every 2 seconds
+  const notificationInterval = setInterval(checkLoginStatus, 2000);
+ 
   // Variables for user data
   let userData = {};
 
-  // Check if user is logged in
+  // Function to check if user is logged in
   function checkLoggedIn() {
     const loggedIn = localStorage.getItem('loggedIn');
     if (!loggedIn) {
-      document.getElementById('loginModal').style.display = 'block';
+      showLoginPrompt(); // Show login prompt if user is not logged in
     } else {
       loadUserData();
     }
   }
 
-  // Load user data from localStorage
+  // Function to show login prompt
+  function showLoginPrompt() {
+    const body = document.querySelector('body');
+    const loginPrompt = document.createElement('div');
+    loginPrompt.classList.add('login-prompt');
+    loginPrompt.textContent = "";
+    body.appendChild(loginPrompt);
+    showLoginModal(); // Show login modal when not logged in
+  }
+
+  // Function to show login modal
+  function showLoginModal() {
+    document.getElementById('loginModal').style.display = 'block';
+  }
+
+  // Function to populate user details modal
+  function populateUserDetailsModal() {
+    // Load user data from localStorage
+    const savedUserData = JSON.parse(localStorage.getItem('userData'));
+    if (savedUserData) {
+      userData = savedUserData;
+      document.getElementById('userName').textContent = userData.name;
+      document.getElementById('userMobile').textContent = userData.mobile;
+    }
+  }
+
+  // Function to save user data to localStorage
+  function saveUserData() {
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+
+  // Function to load user data from localStorage
   function loadUserData() {
     const savedUserData = JSON.parse(localStorage.getItem('userData'));
     if (savedUserData) {
       userData = savedUserData;
+      showLoggedInState();
     }
   }
 
-  // Save user data to localStorage
-  function saveUserData() {
-    localStorage.setItem('userData', JSON.stringify(userData));
+  // Function to show logged-in state
+  function showLoggedInState() {
+    populateUserDetailsModal();
+  }
+
+  // Function to show edit form
+  function showEditForm() {
+    const editForm = document.getElementById('editForm');
+    const userName = document.getElementById('userName');
+    const userMobile = document.getElementById('userMobile');
+    
+    // Hide user details, show edit form
+    editForm.style.display = 'block';
+    userName.style.display = 'none';
+    userMobile.style.display = 'none';
+    
+    // Populate edit form fields with current user details
+    document.getElementById('editName').value = userData.name;
+    document.getElementById('editMobile').value = userData.mobile;
+  }
+
+  // Function to save edited user details
+  function saveEditedUserDetails() {
+    const newName = document.getElementById('editName').value;
+    const newMobile = document.getElementById('editMobile').value;
+
+    // Update userData with edited details
+    userData.name = newName;
+    userData.mobile = newMobile;
+
+    // Save updated user data to localStorage
+    saveUserData();
+
+    // Update displayed user details
+    document.getElementById('userName').textContent = newName;
+    document.getElementById('userMobile').textContent = newMobile;
+
+    // Hide edit form, show user details
+    document.getElementById('editForm').style.display = 'none';
+    document.getElementById('userName').style.display = 'block';
+    document.getElementById('userMobile').style.display = 'block';
+
+    // Show success message
+    alert('User details updated successfully.');
+
+    return false; // Prevent form submission
+  }
+
+  // Open user profile modal and populate user details
+  function openUserProfileModal() {
+    document.getElementById('userDetailsModal').style.display = 'block';
+    populateUserDetailsModal();
   }
 
   // Login user
@@ -256,71 +468,79 @@
     saveUserData();
     localStorage.setItem('loggedIn', true);
     closeLoginModal();
-    return false; // Prevent form submission
-  }
-
-  // Show user profile
-  function showUserProfile() {
-    document.getElementById('userDetailsModal').style.display = 'block';
-    displayUserDetails();
-  }
-
-  // Display user details
-  function displayUserDetails() {
-    const userDetailsContent = document.getElementById('userDetailsContent');
-    userDetailsContent.innerHTML = `
-      <p><strong>Mobile Number:</strong> ${userData.mobile}</p>
-      <p><strong>Name:</strong> ${userData.name}</p>
-      <p><strong>Password:</strong> ${userData.password}</p>
-    `;
-  }
-
-  // Edit user details
-  function editUserDetails() {
-    const userDetailsContent = document.getElementById('userDetailsContent');
-    userDetailsContent.innerHTML = `
-      <form id="editForm" onsubmit="return saveEditedUserDetails()">
-        <div>
-          <label for="mobile">Mobile Number:</label>
-          <input type="text" id="mobile" value="${userData.mobile}" required>
-        </div>
-        <div>
-          <label for="name">Name:</label>
-          <input type="text" id="name" value="${userData.name}" required>
-        </div>
-        <div>
-          <label for="password">Password (8 characters, no digits):</label>
-          <input type="password" id="password" pattern="[a-zA-Z]{8}" value="${userData.password}" required>
-        </div>
-        <button type="submit" class="btn">Save</button>
-      </form>
-    `;
-  }
-
-  // Save edited user details
-  function saveEditedUserDetails() {
-    const mobile = document.getElementById('mobile').value;
-    const name = document.getElementById('name').value;
-    const password = document.getElementById('password').value;
+    openUserProfileModal(); // Open user profile modal on successful login
     
-    // Saving edited user data to localStorage
-    userData = { mobile, name, password };
-    saveUserData();
-    closeUserDetailsModal();
+    // Change login button to submit with animation
+    const loginButton = document.querySelector('#profileLogo img');
+    loginButton.setAttribute('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwNow8bAOVbRGkGx1Ofg9A85ArK_s6yiVx0v9ul2PuLQ&s'); // Change src attribute to submit button image
+    loginButton.setAttribute('onclick', ''); // Remove onclick attribute
+    loginButton.style.width = '100px'; // Adjust button width for animation
+    loginButton.style.transition = 'width 0.5s ease'; // Add transition effect
+    loginButton.addEventListener('transitionend', function() {
+      loginButton.style.width = '50px'; // Reset button width after animation
+      loginButton.setAttribute('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwNow8bAOVbRGkGx1Ofg9A85ArK_s6yiVx0v9ul2PuLQ&s'); // Change src attribute back to login button image
+      loginButton.setAttribute('onclick', 'openUserProfileModal()'); // Restore onclick attribute
+    });
+    
+    // Show success popup
+    showPopup('Login Successful!');
+    
     return false; // Prevent form submission
   }
 
-  // Close login modal
+  // Show popup
+  function showPopup(message) {
+    const popup = document.getElementById('popup');
+    const popupMessage = document.getElementById('popupMessage');
+    popupMessage.textContent = message;
+    popup.style.display = 'block';
+    setTimeout(function() {
+      popup.style.display = 'none';
+    }, 3000); // Hide popup after 3 seconds
+  }
+
+  // Show confirmation popup for logout
+  function showLogoutConfirmation() {
+    const confirmLogout = confirm('Are you sure you want to log out?');
+    if (confirmLogout) {
+      logout();
+    }
+  }
+
+  // Logout function
+  // Logout function
+function logout() {
+  // Clear user data
+  localStorage.removeItem('userData');
+  localStorage.removeItem('loggedIn');
+  // Show success popup for logout
+  showPopup('Your data has been successfully deleted. Please login again.');
+
+  // Wait for the user to close the logout popup, then show the login modal
+  const logoutPopup = document.getElementById('popup');
+  logoutPopup.addEventListener('transitionend', function() {
+    // Automatically show login modal after the logout popup closes
+    showLoginModal();
+  }, { once: true });
+  
+  // Restore login button functionality
+  const loginButton = document.querySelector('#profileLogo img');
+  loginButton.setAttribute('src', 'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg');
+  loginButton.setAttribute('onclick', 'openUserProfileModal()');
+}
+
+
+  // Placeholder function for closing login modal
   function closeLoginModal() {
     document.getElementById('loginModal').style.display = 'none';
   }
 
-  // Close user details modal
+  // Placeholder function for closing user details modal
   function closeUserDetailsModal() {
     document.getElementById('userDetailsModal').style.display = 'none';
   }
 
-  // Close popup
+  // Placeholder function for closing popup
   function closePopup() {
     document.getElementById('popup').style.display = 'none';
   }
@@ -329,229 +549,20 @@
   window.onload = function() {
     checkLoggedIn();
   };
-  // Initial account balance for the user
-  let userBalance = 10000;
-  let userPortfolio = []; // Array to store user's bought stocks
-
-  // Companies and their initial trade prices
-  let companies = ['VOB', 'QTB', 'ADB', 'KJB', 'RTB', 'QUI', 'POB', 'PLC', 'FIP', 'BDR', 'IOC', 'BNK', 'INF', 'UPI', 'AOS'];
-  let tradePrices = [600, 2200, 120, 150, 300, 4000, 900, 3200, 800, 5000, 250, 700, 2100, 400, 600]; // Sample trade prices
-
-  const lineChartCanvas = document.getElementById('lineChart').getContext('2d');
-  const barChartCanvas = document.getElementById('barChart').getContext('2d');
-
-  const lineChart = new Chart(lineChartCanvas, {
-    type: 'line',
-    data: {
-      labels: companies,
-      datasets: [{
-        label: 'Stock Price',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1,
-        data: tradePrices,
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Line Chart'
+   // Function to reload the page in the background
+   // Function to reload page content
+   function refreshBackgroundContent() {
+            $.ajax({
+                url: 'login2.php', // Replace with your server script to fetch updated content
+                cache: false,
+                success: function(response){
+                    // Update only specific parts of the page
+                    $('#contentToUpdate').html(response);
+                }
+            });
         }
-      }
-    }
-  });
 
-  const barChart = new Chart(barChartCanvas, {
-    type: 'bar',
-    data: {
-      labels: companies,
-      datasets: [{
-        label: 'Stock Volume',
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
-        data: tradePrices, // You can update this with appropriate volume data if available
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Bar Chart'
-        }
-      }
-    }
-  });
-
-  /// Function to update trade prices with random colors
-function updateTradePrices() {
-  let tradePricesHtml = '';
-  let totalProfitLoss = 0; // To calculate total profit or loss
-  
-  // Loop through each company
-  for (let i = 0; i < companies.length; i++) {
-    let stockIndex = userPortfolio.findIndex(item => item.company === companies[i]);
-    let profitLoss = stockIndex !== -1 ? userPortfolio[stockIndex].price - tradePrices[i] : 0;
-    totalProfitLoss += profitLoss;
-
-    let profitLossClass = profitLoss >= 0 ? 'profit' : 'loss';
-    let color = profitLoss >= 0 ? 'green' : 'red';
-    
-    tradePricesHtml += `<div class="trade-price" style="border-color: ${color};">
-                          <strong>${companies[i]}</strong>
-                          <p>${tradePrices[i]}</p>
-                          <span class="${profitLossClass}" style="color: ${color};">${profitLoss >= 0 ? '+' : '-'}${Math.abs(profitLoss)}</span>
-                          <button class="btn btn-buy" onclick="buyStock(${i})">Buy</button>`;
-    if (stockIndex !== -1) {
-      tradePricesHtml += `<button class="btn btn-sell" onclick="sellStock(${i})">Exit</button>`;
-    }
-    tradePricesHtml += `</div>`;
-  }
-
-  // Style the balance based on whether it's positive or negative
-  let balanceColor = userBalance >= 0 ? 'green' : 'red';
-  let balanceText = userBalance >= 0 ? '+' + userBalance.toFixed(2) : userBalance.toFixed(2);
-
-  // Update the trade prices display
-  document.getElementById('tradePrices').innerHTML = tradePricesHtml;
-  
-  // Update the available balance display
-  document.getElementById('portfolioContent').innerHTML += `<p style="color: ${balanceColor};">Available Balance: ${balanceText}</p>`;
-  
-  // Check if the user has lost all their balance
-  if (userBalance <= 0) {
-    document.getElementById('portfolioContent').innerHTML += `<p style="color: red;">You have lost all your balance.</p>`;
-  }
-}
-
-
-  // Function to update chart data (simulated for demonstration)
-  function updateChartData() {
-    // Update trade prices with random values
-    for (let i = 0; i < tradePrices.length; i++) {
-      tradePrices[i] = Math.floor(Math.random() * 11000);
-    }
-    // Update the charts
-    lineChart.data.datasets[0].data = tradePrices;
-    barChart.data.datasets[0].data = tradePrices;
-    lineChart.update();
-    barChart.update();
-
-    // Update trade prices display
-    updateTradePrices();
-  }
-
-  // Function to buy stock
-  function buyStock(index) {
-    if (userBalance >= tradePrices[index]) {
-      userBalance -= tradePrices[index];
-      userPortfolio.push({company: companies[index], price: tradePrices[index], time: new Date().toLocaleString()});
-      updateLocalStorage();
-      updateTradePrices();
-      alert(`You bought ${companies[index]} stock for ${tradePrices[index]}. Your remaining balance is ${userBalance}`);
-    } else {
-      alert('Insufficient balance to buy this stock.');
-    }
-  }
-
-  // Function to sell stock
-  function sellStock(index) {
-    let stockIndex = userPortfolio.findIndex(item => item.company === companies[index]);
-    if (stockIndex !== -1) {
-      let profitLoss = tradePrices[index] - userPortfolio[stockIndex].price;
-      if (profitLoss >= 0) {
-        userBalance += tradePrices[index];
-        userPortfolio.splice(stockIndex, 1);
-        updateLocalStorage();
-        updateTradePrices();
-        alert(`You sold ${companies[index]} stock for ${tradePrices[index]}. Your remaining balance is ${userBalance}. Profit/Loss: ${profitLoss}`);
-      } else {
-        alert(`You can't sell ${companies[index]} stock at a loss.`);
-      }
-    }
-  }
-
-  // Function to exit trade
-  function exitTrade(index) {
-    let stockIndex = userPortfolio.findIndex(item => item.company === companies[index]);
-    if (stockIndex !== -1) {
-      let profitLoss = tradePrices[index] - userPortfolio[stockIndex].price;
-      if (profitLoss >= 0) {
-        userBalance += tradePrices[index];
-        userPortfolio.splice(stockIndex, 1);
-        updateLocalStorage();
-        updateTradePrices();
-        alert(`You exited ${companies[index]} trade. Your remaining balance is ${userBalance}. Profit: ${profitLoss}`);
-      } else {
-        alert(`You can't exit ${companies[index]} trade at a loss.`);
-      }
-    }
-  }
-
-  // Function to update local storage with user portfolio data
-  function updateLocalStorage() {
-    localStorage.setItem('userPortfolio', JSON.stringify(userPortfolio));
-    localStorage.setItem('userBalance', userBalance);
-  }
-
-  // Function to display user portfolio
-  function displayPortfolio() {
-    const storedPortfolio = JSON.parse(localStorage.getItem('userPortfolio'));
-    const storedBalance = localStorage.getItem('userBalance');
-    if (storedPortfolio && storedBalance) {
-      userPortfolio = storedPortfolio;
-      userBalance = parseFloat(storedBalance);
-      let portfolioHtml = '';
-      let lossHistory = 0;
-      let profitHistory = 0;
-      userPortfolio.forEach(stock => {
-        let profitLoss = tradePrices[companies.indexOf(stock.company)] - stock.price;
-        if (profitLoss >= 0) {
-          profitHistory += profitLoss;
-        } else {
-          lossHistory += profitLoss;
-        }
-        portfolioHtml += `<div><strong>${stock.company} (${stock.time}):</strong> ${stock.price}</div>`;
-        portfolioHtml += `<div>Exit: <button class="btn btn-exit" onclick="exitTrade(${companies.indexOf(stock.company)})">Exit</button></div>`;
-      });
-      portfolioHtml += `<p>Available Balance: ${userBalance.toFixed(2)}</p>`;
-      portfolioHtml += `<p>Loss History: ${lossHistory}</p>`;
-      portfolioHtml += `<p>Profit History: ${profitHistory}</p>`;
-      document.getElementById('portfolioContent').innerHTML = portfolioHtml;
-      document.getElementById('portfolioModal').style.display = 'flex';
-    } else {
-      alert('No portfolio data found.');
-    }
-  }
-
-  // Function to close portfolio modal
-  function closePortfolioModal() {
-    document.getElementById('portfolioModal').style.display = 'none';
-  }
-
-  // Function to show popup message
-  function showPopup(message) {
-    document.getElementById('popupMessage').innerText = message;
-    document.getElementById('popup').style.display = 'block';
-  }
-
-  // Function to close popup
-  function closePopup() {
-    document.getElementById('popup').style.display = 'none';
-  }
-
-  // Event listener for portfolio button
-  document.getElementById('portfolioBtn').addEventListener('click', displayPortfolio);
-
-  // Update chart data every 3 seconds
-  setInterval(updateChartData, 3000);
-
-  // Initial update
-  updateTradePrices();
+        // Set interval to refresh every second
+        setInterval(refreshBackgroundContent, 1000); // 1000 milliseconds = 1 second
 </script>
-
-</body>
-</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
