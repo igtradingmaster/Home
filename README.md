@@ -206,7 +206,7 @@
 </head>
 
 <body>
-<img id="aiRobot" src="" AI ROBOT security alt="AI Robot">
+<img id="aiRobot" src="pngtree-future-intelligent-technology-robot-ai-png-image_2588803-removebg-preview.png" AI ROBOT security alt="AI Robot">
 
 <!-- Display AI Status -->
 <div id="aiStatus" style="text-align: center;">Stable</div>
