@@ -654,9 +654,18 @@ color: #007bff;
     
 </head>
 <center><p2>DEVLOPER: VED BHOGAYTA </p2><ul></ul>
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Your other HTML code here -->
+</head>
+<body>
+    <div class="container-lg px-3 my-5 markdown-body">
+</body>
 <body onload="showLogin()">
   <div id="formContainer">
-    <form>
+   <center><form>
       <div id="actionButtons">
         <button type="button" onclick="showRegister()">Register</button>
         <button type="button" onclick="showLogin()">Login</button>
@@ -722,6 +731,7 @@ color: #007bff;
           <button type="button" onclick="copyReferralLink()">Copy Referral Link</button> <ul></ul>
           
         </div>
+    </div>
 </center>
 
 
