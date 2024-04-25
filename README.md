@@ -662,7 +662,7 @@ color: #007bff;
 </head>
 <body>
     <div class="container-lg px-3 my-5 markdown-body">
-</body>
+
 <body onload="showLogin()">
   <div id="formContainer">
    <center><form>
@@ -732,7 +732,7 @@ color: #007bff;
           
         </div>
     </div>
-</center>
+
 
 
 <script>
