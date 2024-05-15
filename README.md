@@ -1598,7 +1598,7 @@ document.getElementById("closeButton").style.display = "none";
 
     // Use Clipboard API to copy the link to the clipboard
     navigator.clipboard.writeText(fullUrl)
-      .then(() => alert("Referral Link copied: " + fullUrl) Please open new tab and paste this url. thank you!) // Show an alert indicating successful copy
+      .then(() => alert("Referral Link copied: " + fullUrl)) // Show an alert indicating successful copy
       .catch((err) => console.error("Unable to copy to clipboard: ", err)); // Log any errors to the console
 }
 
