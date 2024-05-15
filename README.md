@@ -1744,7 +1744,7 @@ window.addEventListener("beforeunload", function(event) {
 });
 function downloadApk() {
         // You can replace the placeholder URL with the actual URL of your WebAPK
-        var apkUrl = "https://www.mediafire.com/file/6s1hjfw8mwcapau/VB.apk/file";
+        var apkUrl = "https://www.mediafire.com/file/vpe9mvy990zelu8/vb.apk/file";
         
         // Create an anchor element and set its href attribute to the apkUrl
         var anchor = document.createElement("a");
