@@ -1124,7 +1124,7 @@ h9:hover {
       <div id="actionButtons">
         <button type="button" onclick="showRegister()">Register</button>
         <button type="button" onclick="showLogin()">Login</button>
-        <a href="https://igtradingmaster.github.io/HELP-EMPLOYE/">
+        <a href="faltu.html">
           <div id="profileLogo" data-toggle="modal" data-target="#profileModal">&#128100;NeedHelp</div>
         </a>
         <div id="deviceNameBox"></div>
@@ -1182,11 +1182,18 @@ h9:hover {
       <div id="shareInviteContainer" style="display: none;">
         <h2>Share &amp; Invite</h2>
         <p>Your Referral Code: <span id="referralCode"></span></p>
-        <p>Referral Link: https://igtradingmaster.github.io/REGISTER-LOGIN/?ref=<span id="refereealCode"></span> <span id="fullReferralLink"></span></p>
+        <p>Referral Link: https://igtradingmaster.github.io/LOGIN/?ref= <span id="fullReferralLink"></span></p>
         <div id="referralLink" style="display: none;">
           <button type="button" onclick="copyReferralLink()">Copy Referral Link</button> <ul></ul>
           
         </div>
+        <div id="referralDetails" style="display: none;">
+          <h2>Referred User Details</h2>
+          <p id="referredUserId">User ID: </p>
+          <p id="referredMobileNumber">Mobile Number: </p>
+          <p id="referredName">Name: </p>
+      </div>
+  </div>
 
 
 <script>
@@ -1398,7 +1405,6 @@ h9:hover {
   }
 
   function showProfile(user) {
-  
     document.getElementById("registrationSection").style.display = "none";
     document.getElementById("loginSection").style.display = "none";
     document.getElementById("profileContainer").style.display = "block";
@@ -1414,15 +1420,26 @@ h9:hover {
     document.getElementById("profileEmail").innerText = "Email: " + user.email;
 
     // Show the "Edit" and "Close" buttons
-document.getElementById("editButton").style.display = "block";
-document.getElementById("closeButton").style.display = "block";
+    document.getElementById("editButton").style.display = "block";
+    document.getElementById("closeButton").style.display = "block";
 
     // Set the user's status to "online"
-  document.getElementById("status").innerText = "Status: Online";
+    document.getElementById("status").innerText = "Status: Online";
 
-   // Update login status
-   isLoggedIn = true;
-  }
+    // Update login status
+    isLoggedIn = true;
+
+    // Check if the user was referred
+    var referredBy = getQueryParameter('ref');
+    if (referredBy) {
+        // Show the referred user's details in the referring user's profile
+        document.getElementById("referralDetails").innerText = "Referred User Details:";
+        document.getElementById("referredUserId").innerText = "User ID: " + user.userId;
+        document.getElementById("referredMobileNumber").innerText = "Mobile Number: " + user.mobileNumber;
+        document.getElementById("referredName").innerText = "Name: " + user.name;
+    }
+}
+
 
   function editProfile() {
 // Hide the profile section and show the edit profile section
