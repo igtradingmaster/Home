@@ -1182,12 +1182,12 @@ h9:hover {
       <div id="shareInviteContainer" style="display: none;">
         <h2>Share &amp; Invite</h2>
         <p>Your Referral Code: <span id="referralCode"></span></p>
-        <p>Referral Link: https://igtradingmaster.github.io/LOGIN/?ref= <span id="fullReferralLink"></span></p>
+        <p>Referral Link: https://igtradingmaster.github.io/REGISTER-LOGIN/?ref=<span id="refereealCode"></span> <span id="fullReferralLink"></span></p>
         <div id="referralLink" style="display: none;">
           <button type="button" onclick="copyReferralLink()">Copy Referral Link</button> <ul></ul>
           
         </div>
-</center>
+
 
 <script>
 
