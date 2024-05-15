@@ -54,16 +54,46 @@ background-position: center;
 }
 
 #formContainer {
-text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+}
+
+@keyframes changeColor {
+  0% { background-color: #3498db; } /* Blue background */
+  10% { background-color: #f1c40f; } /* Yellow background */
+  20% { background-color: #27ae60; } /* Green background */
+  30% { background-color: #e67e22; } /* Orange background */
+  40% { background-color: #7f8c8d; } /* Dark silver background */
+  50% { background-color: #e91e63; } /* Pink background */
+  60% { background-color: #ff0000; } /* Red background */
+  100% { background-color: #2ecc71; } /* Another Green background */
 }
 
 form {
-background-color: #fff;
-padding: 20px;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-width: 400px;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  animation: changeColor 8s infinite; /* Change color every 8 seconds */
 }
+
+
+/* Input field styles */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #333;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+}
+
 
 input {
 width: calc(100% - 20px);
@@ -406,57 +436,73 @@ padding: 8px 16px;
 }
 /* Stylish Login Form CSS */
 
-/* Login Section */
+//* Login Section */
 #loginSection {
-display: flex;
-flex-direction: column;
-align-items: center;
-background-color: #f9f9f9;
-border-radius: 10px;
-padding: 20px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-width: 300px;
-margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  margin: 0 auto;
 }
 
 /* Input Fields */
 #loginSection input {
-width: 100%;
-padding: 10px;
-margin: 10px 0;
-border: 1px solid #ccc;
-border-radius: 5px;
-transition: border-color 0.3s ease;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
 }
 
 /* Input Field Focus */
 #loginSection input:focus {
-outline: none;
-border-color: #007bff;
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glowing effect on focus */
 }
 
 /* Login Button */
 #loginSection button {
-width: 100%;
-padding: 10px;
-background-color: #007bff;
-color: #fff;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background-color 0.3s ease;
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(255, 0, 0); /* Initial background color (Red) */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 /* Login Button Hover */
 #loginSection button:hover {
-background-color: #0056b3;
+  background-color: rgb(255, 165, 0); /* Orange background on hover */
 }
 
 /* Error Message */
 #loginSection .error {
-color: red;
-margin-top: 10px;
-text-align: center;
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Glowing Animation */
+@keyframes changeColor {
+  0% { background-color: rgb(255, 0, 0); } /* Red */
+  20% { background-color: rgb(255, 255, 0); } /* Yellow */
+  40% { background-color: rgb(0, 255, 0); } /* Green */
+  60% { background-color: rgb(0, 255, 255); } /* Cyan */
+  80% { background-color: rgb(0, 0, 255); } /* Blue */
+  100% { background-color: rgb(255, 0, 255); } /* Magenta */
+}
+
+/* Applying Glowing Animation on Focus */
+#loginSection button:focus {
+  animation: changeColor 5s infinite alternate; /* Glowing effect on focus */
 }
 
 /* Forgot Password Link */
@@ -620,12 +666,7 @@ color: #007bff;
 }
 
 /* Style for the input fields and button */
-#loginSection input[type="text"],
-#loginSection input[type="password"],
-#loginSection button {
-    width: calc(100% - 22px); /* Make input fields and button fill the container minus padding and border */
-    margin-bottom: 10px; /* Add some space between elements */
-}
+
 
 /* Style for the error message */
 #loginError {
@@ -633,45 +674,462 @@ color: #007bff;
 }
 
 /* Loader Animation */
-.loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-    margin: auto;
-    margin-top: 50px;
-}
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#profileContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #333;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+#status {
+  margin-top: 20px;
+}
+
+#downloadApkButton {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  margin-top: 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+#downloadApkButton:hover {
+  background-color: #f44336;
+}
+/* Button Styles */
+button {
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button[type="button"] {
+  background-color: #3498db;
+  color: white;
+}
+
+button[type="button"]:hover {
+  background-color: #2980b9;
+}
+
+#editButton {
+  background-color: #2ecc71;
+}
+
+#editButton:hover {
+  background-color: #27ae60;
+}
+
+#shareInviteButton {
+  background-color: #f1c40f;
+}
+
+#shareInviteButton:hover {
+  background-color: #f39c12;
+}
+
+#downloadApkButton {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
+#downloadApkButton:hover {
+  background-color: #c0392b;
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+  0% {
+    background-color: rgb(255, 0, 0);
+  }
+  50% {
+    background-color: rgb(255, 255, 0);
+  }
+  100% {
+    background-color: rgb(255, 0, 0);
+  }
+}
+/* Style for the Continue button */
+#continueButton {
+    background-color: rgb(173, 216, 230); /* Light blue */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+/* CSS for form layout */
+#actionButtons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#registrationSection, #loginSection, #profileContainer, #editProfileContainer, #shareInviteContainer {
+  width: 320px;
+  margin: 0 auto;
+  border: 2px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+}
+
+.error {
+  color: red;
+}
+
+/* Styling for success and error indicators */
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  padding-right: 30px; /* Space for icon */
+}
+
+.input-container .icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.input-container .loader {
+  display: none;
+}
+
+.input-container .loader.show {
+  display: block;
+}
+
+.input-container .checkmark {
+  display: none;
+}
+
+.input-container .checkmark.show {
+  display: block;
+  color: green;
+}
+
+#actionButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+#registerBtn {
+  color: #fff;
+  background-color: rgb(255, 0, 0); /* Initial background color (Red) */
+}
+
+#loginBtn {
+  color: #fff;
+  background-color: rgb(0, 0, 255); /* Initial background color (Blue) */
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+button:focus {
+  outline: none;
+}
+
+@keyframes changeColor {
+  0% { background-color: rgb(255, 0, 0); } /* Red */
+  16.6% { background-color: rgb(255, 255, 0); } /* Yellow */
+  33.3% { background-color: rgb(0, 255, 0); } /* Green */
+  50% { background-color: rgb(0, 255, 255); } /* Cyan */
+  66.6% { background-color: rgb(0, 0, 255); } /* Blue */
+  83.3% { background-color: rgb(255, 0, 255); } /* Magenta */
+  100% { background-color: rgb(128, 128, 128); } /* Gray */
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgb(255, 255, 255); }
+  50% { box-shadow: 0 0 20px rgb(255, 255, 255); }
+  100% { box-shadow: 0 0 5px rgb(255, 255, 255); }
+}
+
+button:focus {
+  animation: changeColor 7s infinite alternate, glow 2s infinite alternate;
+}
+#profileUserId,
+#profileMobileNumber,
+#profileName,
+#profilePassword,
+#profileBackupCode,
+#profileEmail {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow */
+  animation: glow 2s infinite alternate; /* Add glowing animation */
+  margin-bottom: 10px; /* Add spacing between elements */
+}
+
+/* Define the glow animation */
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); } /* Red light */
+  50% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); } /* Red light with higher intensity */
+  100% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); } /* Red light */
+}
+/* Style the edit button */
+#editButton {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow */
+}
+
+/* Add RGB light effect */
+@keyframes rgbLight {
+  0% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); } /* Red light */
+  50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); } /* Green light */
+  100% { box-shadow: 0 0 10px rgba(0, 0, 255, 0.5); } /* Blue light */
+}
+
+/* Apply the RGB light effect on hover */
+#editButton:hover {
+  animation: rgbLight 2s infinite alternate;
+}
+/* Style the h9 element */
+h9 {
+  font-size: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add shadow */
+  animation: grow 2s infinite alternate; /* Add growing animation */
+}
+
+/* Define the growing animation */
+@keyframes grow {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+/* Apply RGB light effect */
+@keyframes rgbLight {
+  0% { text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5); } /* Red light */
+  50% { text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.5); } /* Green light */
+  100% { text-shadow: 2px 2px 4px rgba(0, 0, 255, 0.5); } /* Blue light */
+}
+
+/* Apply the RGB light effect on hover */
+h9:hover {
+  animation: rgbLight 2s infinite alternate;
+}
+ /* Styles for full-screen popup/modal */
+  /* Styles for full-screen popup/modal */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  .popup-content {
+    background-color: #ffffff; /* White background */
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+    max-width: 80%; /* Limit maximum width */
+  }
+  .popup-message {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  .popup-button {
+    background-color: #007bff; /* Blue button */
+    color: #ffffff; /* White text */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .popup-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  .loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #3498db;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 /* End of CSS */
 
 </style>
-    
+<!-- Full-screen popup/modal -->
+
 </head>
 <center><p2>DEVLOPER: VED BHOGAYTA </p2><ul></ul>
-    <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Your other HTML code here -->
-</head>
-<body>
-    <div class="container-lg px-3 my-5 markdown-body">
-
+  
 <body onload="showLogin()">
   <div id="formContainer">
-   <center><form>
+    <form>
       <div id="actionButtons">
         <button type="button" onclick="showRegister()">Register</button>
         <button type="button" onclick="showLogin()">Login</button>
-        <div id="profileLogo" data-toggle="modal" data-target="#profileModal">&#128100; Login</div>
+        <a href="faltu.html">
+          <div id="profileLogo" data-toggle="modal" data-target="#profileModal">&#128100;Help</div>
+        </a>
         <div id="deviceNameBox"></div>
       </div>
+      
 
       <div id="registrationSection">
         <h2>Register</h2>
@@ -695,25 +1153,23 @@ color: #007bff;
   <p class="error" id="loginError"></p>
 </div>
      
-<div id="profileContainer">
-  <h2>Profile</h2>
-  <button type="button" id="editButton" onclick="editProfile()">Edit Your Profile</button>
-  <p id="profileUserId"></p>
-  <p id="profileMobileNumber"></p>
-  <p id="profileName"></p>
-  <p id="profilePassword"></p>
-  <p id="profileBackupCode"></p>
-  <p id="profileEmail"></p>
-  <p id="status">Online</p>
-  <button type="button" id="shareInviteButton" onclick="showShareInvite()">Share & Invite</button>
-  <button type="button" onclick="logout()">Logout</button><ul></ul>
-  <button type="button" onclick="downloadApk()">Download Apk</button>
-
-  <!-- Hidden continue button -->
-<button type="button" id="continueButton" style="display: none;" onclick="redirectSecondPage()">Continue</button>
+<div id="profileContainer" style="display: none;">
+  <h9>PROFILE</h9>
+  <button type="button" id="downloadApkButton" onclick="downloadApk()">Download Apk</button><br><ul></ul>
+  <p id="profileUserId"></p><br>
+  <p id="profileMobileNumber"></p><br>
+  <p id="profileName"></p><br>
+  <p id="profilePassword"></p><br>
+  <p id="profileBackupCode"></p><br>
+  <p id="profileEmail"></p><br>
+  <div id="status"></div>
+  <button type="button" id="shareInviteButton" onclick="showShareInvite()">Share & Invite</button><br>
+  <button type="button" id="editButton" onclick="editProfile()">Edit Your Profile</button><br>
+  <button type="button" onclick="logout()">Logout</button>
 </div>
+
       <div id="editProfileContainer" style="display: none;">
-        <h2>Edit Profile</h2>
+        <center><h2>Edit Profile</h2></center>
         <input type="text" id="editUserId" disabled="" />
         <input type="text" id="editMobileNumber" placeholder="Mobile Number" />
         <input type="text" id="editName" placeholder="Name" />
@@ -731,11 +1187,11 @@ color: #007bff;
           <button type="button" onclick="copyReferralLink()">Copy Referral Link</button> <ul></ul>
           
         </div>
-    </div>
-
-
+</center>
 
 <script>
+
+
   document.addEventListener("DOMContentLoaded", function () {
     setInitialReferralCode();
 
@@ -859,18 +1315,8 @@ color: #007bff;
     var loginBackupCode = document.getElementById("loginBackupCode").value;
 
     // Validate input
-    if (!loginMobileNumber) {
-        alert("Please enter your mobile number.");
-        return;
-    }
-
-    if (!loginPassword) {
-        alert("Please enter your password.");
-        return;
-    }
-
-    if (!loginBackupCode) {
-        alert("Please enter your backup code.");
+    if (!loginMobileNumber || !loginPassword || !loginBackupCode) {
+        alert("Please fill in all the fields.");
         return;
     }
 
@@ -880,38 +1326,40 @@ color: #007bff;
     // Find the user with the provided mobile number
     var user = users.find(u => u.mobileNumber === loginMobileNumber);
 
-    // Validate login credentials
-    if (user) {
-        if (user.password === loginPassword && user.backupCode === loginBackupCode) {
-            // Redirect to profile page
-            showProfile(user);
-
-            // Show congratulations alert with user ID
-            alert("Congratulations! Your login was successful. Your ID: " + user.userId);
-            
-            // Reset error message
-            document.getElementById("loginError").innerText = "";
-
-            return; // Exit the function after successful login
-        } else {
-            // Check which credential is incorrect
-            if (user.password !== loginPassword) {
-                alert("Password incorrect. Please try again.");
-            } else if (user.backupCode !== loginBackupCode) {
-                alert("Backup code incorrect. Please try again.");
-            } else {
-                alert("Unknown error occurred. Please try again.");
-            }
-            // Clear password input
-            document.getElementById("loginPassword").value = "";
-        }
-    } else {
+    // Validate if the user exists
+    if (!user) {
         // Inform the user that the mobile number is incorrect
-        alert("Mobile number is incorrect. Please try again.");
+        alert("Your data was not found. Please register first.");
+        return;
+    }
+
+    // Validate login credentials
+    if (user.password === loginPassword && user.backupCode === loginBackupCode) {
+        // Redirect to profile page
+        showProfile(user);
+
+        // Show congratulations alert with user ID
+        alert("Congratulations! Your login was successful. Your ID: " + user.userId);
+
+        window.location.href = "faltu.html";
+
+        // Reset error message
+        document.getElementById("loginError").innerText = "";
+
+        return; // Exit the function after successful login
+    } else {
+        // Check which credential is incorrect
+        if (user.password !== loginPassword) {
+            alert("Password incorrect. Please try again.");
+        } else if (user.backupCode !== loginBackupCode) {
+            alert("Backup code incorrect. Please try again.");
+        } else {
+            alert("Unknown error occurred. Please try again.");
+        }
+        // Clear password input
+        document.getElementById("loginPassword").value = "";
     }
 }
-
-
   function checkExpiration() {
     var expirationTime = localStorage.getItem("expirationTime");
     if (expirationTime && new Date().getTime() > parseInt(expirationTime)) {
@@ -1121,9 +1569,8 @@ document.getElementById("closeButton").style.display = "none";
     // Redirect to login form
     showLogin();
   }
-
   function showAdminPage() {
-    window.location.href = "admin.html";
+    window.location.href = "av.html";
   }
 
   function showShareInvite() {
@@ -1140,17 +1587,21 @@ document.getElementById("closeButton").style.display = "none";
   }
 
   function copyReferralLink() {
-    var baseUrl = "https://igtradingmaster.github.io/LOGIN/";
+    // Base URL for the APK file
+    var baseUrl = "https://igtradingmaster.github.io/REGISTER-LOGIN/";
+    
+    // Get the current user's referral code, assuming getCurrentUser() returns an object with a userId property
     var referralCode = getCurrentUser().userId;
 
-    // Append the referral code to the URL
+    // Append the referral code to the base URL
     var fullUrl = baseUrl + "?ref=" + referralCode;
 
-    // You can use Clipboard API to copy the link to the clipboard
+    // Use Clipboard API to copy the link to the clipboard
     navigator.clipboard.writeText(fullUrl)
-      .then(() => alert("Referral Link copied: " + fullUrl))
-      .catch((err) => console.error("Unable to copy to clipboard: ", err));
-  }
+      .then(() => alert("Referral Link copied: " + fullUrl)) // Show an alert indicating successful copy
+      .catch((err) => console.error("Unable to copy to clipboard: ", err)); // Log any errors to the console
+}
+
 
   function addToReferredUsersTable(user) {
     var table = document.getElementById("referredUsersTable");
@@ -1308,4 +1759,61 @@ function downloadApk() {
         // Hide the popup after download starts
         document.getElementById("popup").style.display = "none";
     }
+  // Hide the popup after download starts
+document.getElementById("popup").style.display = "none";
+
+
+// JavaScript to handle user status
+var isOnline = true; // Initial status, assuming user is online
+var isLoading = true; // Flag to track if loader animation is currently displayed
+
+function setStatus(online) {
+  var statusContainer = document.getElementById('status');
+  statusContainer.innerHTML = ''; // Clear previous status
+  
+  if (online) {
+    statusContainer.innerText = 'Online'; // Show online status
+  } else {
+    statusContainer.innerHTML = '<div class="loader"></div> Offline'; // Show loader animation for offline status
+  }
+}
+
+// Function to handle user leaving the site
+function handleVisibilityChange() {
+  if (document.visibilityState === "hidden") {
+    isOnline = false;
+    setLoading(true);
+  } else {
+    isOnline = true;
+    setLoading(false);
+  }
+}
+
+// Function to display or hide loader animation
+function setLoading(loading) {
+  if (loading && isLoading) {
+    isLoading = false;
+    setStatus(false); // Set status to offline
+  } else if (!loading && !isLoading) {
+    isLoading = true;
+    setTimeout(function() {
+      setStatus(isOnline); // Set status to online after 2 seconds
+      isLoading = false;
+    }, 2000);
+  }
+}
+
+// Listen for visibility change events
+document.addEventListener('visibilitychange', handleVisibilityChange);
+
+// Initial status setup
+setStatus(isOnline); // Assuming user is online initially
+
+window.addEventListener('beforeunload', function (e) {
+    // Cancel the event
+    e.preventDefault();
+    // Chrome requires returnValue to be set
+    e.returnValue = '';
+});
+
 </script>
