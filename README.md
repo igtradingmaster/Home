@@ -1124,7 +1124,7 @@ h9:hover {
       <div id="actionButtons">
         <button type="button" onclick="showRegister()">Register</button>
         <button type="button" onclick="showLogin()">Login</button>
-        <a href="faltu.html">
+        <a href="https://igtradingmaster.github.io/HELP-EMPLOYE/">
           <div id="profileLogo" data-toggle="modal" data-target="#profileModal">&#128100;NeedHelp</div>
         </a>
         <div id="deviceNameBox"></div>
@@ -1195,19 +1195,14 @@ h9:hover {
           <button type="button" onclick="copyReferralLink()">Copy Referral Link</button> <ul></ul>
           
         </div>
-        <div id="referralDetails" style="display: none;">
-          <h2>Referred User Details</h2>
-          <p id="referredUserId">User ID: </p>
-          <p id="referredMobileNumber">Mobile Number: </p>
-          <p id="referredName">Name: </p>
+        <div id="invitedFriendsContainer" style="display: none;">
+          <h2>Invited Friends</h2>
+          <ul id="invitedFriendsList"></ul>
       </div>
-  </div>
 
 
 <script>
-
-
-  document.addEventListener("DOMContentLoaded", function () {
+ document.addEventListener("DOMContentLoaded", function () {
     setInitialReferralCode();
 
     function setInitialReferralCode() {
