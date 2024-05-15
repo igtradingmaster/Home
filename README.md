@@ -1166,6 +1166,14 @@ h9:hover {
   <button type="button" id="shareInviteButton" onclick="showShareInvite()">Share & Invite</button><br>
   <button type="button" id="editButton" onclick="editProfile()">Edit Your Profile</button><br>
   <button type="button" onclick="logout()">Logout</button>
+
+  <!-- Display referred user's details -->
+  <div id="referredUserDetails" style="display: none;">
+      <h2>Referred User Details</h2>
+      <p>User ID: <span id="referredUserId"></span></p>
+      <p>Mobile Number: <span id="referredMobileNumber"></span></p>
+      <p>Name: <span id="referredName"></span></p>
+  </div>
 </div>
 
       <div id="editProfileContainer" style="display: none;">
@@ -1182,7 +1190,7 @@ h9:hover {
       <div id="shareInviteContainer" style="display: none;">
         <h2>Share &amp; Invite</h2>
         <p>Your Referral Code: <span id="referralCode"></span></p>
-        <p>Referral Link: https://igtradingmaster.github.io/LOGIN/?ref= <span id="fullReferralLink"></span></p>
+        <p>Referral Link: https://igtradingmaster.github.io/REGISTER-LOGIN/?ref= <span id="fullReferralLink"></span></p>
         <div id="referralLink" style="display: none;">
           <button type="button" onclick="copyReferralLink()">Copy Referral Link</button> <ul></ul>
           
