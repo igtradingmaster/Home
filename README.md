@@ -110,7 +110,7 @@
                 </div>
                 <!-- Upload Images Section -->
                 <div class="col-md-4 section">
-                    <img src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" alt="Upload Images" onclick="redirectTo('https://igtradingmaster.github.io/txtread/')">
+                    <img src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" alt="Upload Images" onclick="redirectTo('https://igtradingmaster.github.io/imguploads/')">
                     <p>Upload Images</p>
                 </div>
                 <!-- Upload Videos Section -->
