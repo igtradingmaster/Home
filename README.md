@@ -97,7 +97,7 @@
                         <p>Password Generator</p>
                     </div>
                     <!-- Write Love Letter Section -->
-                    <div class="col-md-4 section display:none;">
+                    <div class="col-md-4 section">
                         <img src="https://th.bing.com/th/id/OIP.yY9X3U95HUJZuBRgUATStAAAAA?w=240&h=240&rs=1&pid=ImgDetMainhttps://static.vecteezy.com/system/resources/previews/014/176/287/original/love-letter-outline-icon-design-illustration-love-symbol-on-white-background-eps-10-file-vector.jpg" alt="Love Letter" onclick="redirectTo('#')">
                         <p>Love Letter</p>
                     </div>
