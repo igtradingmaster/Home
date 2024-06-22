@@ -72,7 +72,6 @@
                 h1 {
                     text-align: center;
                     margin-top: 30px;
-                    display: none;
                     
                 }
                 .no-copy {
