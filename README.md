@@ -1,145 +1,427 @@
-
-
-    <head>
-       
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        
-        
-        <title>Hello World</title>
-    </head>
-    <body>
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-            <style>
-                /* Reset default styles */
-                body, html {
-                    margin: 0;
-                    padding: 0;
-                    font-family: Arial, sans-serif;
-                }
-        
-                body {
-                    background-color: #f8f9fa;
-                }
-                body {
-          background-image: url('https://i.pinimg.com/originals/a0/95/79/a095793d809f2e134db9f8b3fb55ba95.gif'); /* Replace 'background.jpg' with your image path */
-          background-size: cover; /* Cover the entire background */
-          background-position: center; /* Center the background image */
-          background-repeat: no-repeat; /* Do not repeat the background image */
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          color: #333; /* Text color */
-        }
-                .container {
-                    max-width: 1200px;
-                    margin: 50px auto;
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                }
-        
-                .section {
-                    text-align: center;
-                    margin: 20px;
-                    padding: 20px;
-                    background-color: #fff;
-                    border-radius: 10px;
-                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                    transition: transform 0.3s ease-in-out;
-                    width: 250px;
-                }
-        
-                .section:hover {
-                    transform: translateY(-5px);
-                }
-        
-                .section img {
-                    width: 150px;
-                    height: 150px;
-                    border-radius: 50%;
-                    cursor: pointer;
-                    transition: transform 0.3s ease-in-out;
-                }
-        
-                .section img:hover {
-                    transform: scale(1.1);
-                }
-        
-                .section p {
-                    font-size: 18px;
-                    margin-top: 10px;
-                }
-        
-                h1 {
-                    text-align: center;
-                    margin-top: 30px;
-                    
-                }
-                .no-copy {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload with Password Protection</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+       /* Body and general styles */
+/* Body and general styles */
+.no-copy {
     -webkit-user-select: none;  /* Safari */
     -moz-user-select: none;     /* Firefox */
     -ms-user-select: none;      /* Internet Explorer/Edge */
     user-select: none;          /* Standard syntax */
 }
-            </style>
-        </head>
-        <body>
-            <center><div class="container">
-                <div class="row">
-                    <div class="col-md-4 section">
-                        <img src="data:image/png;base64,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" alt="Length Finder"
-                         onclick="redirectTo('lenght.html')">
-                        <p>Length Finder</p>
-                    </div>
-                    <!-- Password Generator Section -->
-                    <div class="col-md-4 section">
-                        <img src="https://media.istockphoto.com/id/1413096640/vector/fitness-health-gym-trendy-icons-on-circles.jpg?s=612x612&w=0&k=20&c=B_6LBgyXLmumgi3pCmhnYS_v4SJPxuAVHQe6EhcwPCw=" alt="Password Generator" onclick="redirectTo('pass.html')">
-                        <p>Password Generator</p>
-                    </div>
-                    <!-- Write Love Letter Section -->
-                    <div class="col-md-4 section display:none;">
-                        <img src="https://th.bing.com/th/id/OIP.yY9X3U95HUJZuBRgUATStAAAAA?w=240&h=240&rs=1&pid=ImgDetMainhttps://static.vecteezy.com/system/resources/previews/014/176/287/original/love-letter-outline-icon-design-illustration-love-symbol-on-white-background-eps-10-file-vector.jpg" alt="Love Letter" onclick="redirectTo('#')">
-                        <p>Love Letter</p>
-                    </div>
-                    <!-- Placeholder Section 4 -->
-                    <div class="col-md-4 section">
-                        <img src="https://th.bing.com/th/id/OIP.yY9X3U95HUJZuBRgUATStAAAAA?w=240&h=240&rs=1&pid=ImgDetMainhttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQZ77DzQA-6KXFZfcUaWt2H4hnXfdumHxHMw&s" alt="Placeholder 4" onclick="redirectTo('#')">
-                        <p>Sorry Letter</p>
-                    </div>
-                    <!-- Placeholder Section 5 -->
-                    <div class="col-md-4 section">
-                        <img src="https://media.istockphoto.com/id/1193039142/vector/sign-up-icon-isolated-on-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=wk4fcec72ODMyW292XmSJg3PqPAmW9-BtdWta91UhUU=" alt="Placeholder 5" onclick="redirectTo('text.html')">
-                        <p>Txt reader</p>
-                    </div>
-                    <!-- Placeholder Section 6 -->
-                    <div class="col-md-4 section">
-                        <img src="https://th.bing.com/th/id/OIP.yY9X3U95HUJZuBRgUATStAAAAA?w=240&h=240&rs=1&pid=ImgDetMainhttps://upload.wikimedia.org/wikipedia/commons/5/5c/97-979947_writing-writer-essay-logo-act-writer-logo-png.png" alt="Placeholder 6" onclick="redirectTo('#')">
-                        <p>Essay Writer</p>
-                    </div>
-                    <!-- Placeholder Section 7 -->
-                    <div class="col-md-4 section">
-                        <img src="https://th.bing.com/th/id/OIP.yY9X3U95HUJZuBRgUATStAAAAA?w=240&h=240&rs=1&pid=ImgDetMainhttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY9zqnNBZETTQ2unLJLznmFWPV9U31vOLE-0ow6K5W8HG6lu_emAP4snyjxm1wtNkx4ug&usqp=CAU" alt="Placeholder 7" onclick="redirectTo('#')">
-                        <p>Self Improvement</p>
-                    </div>
-                    <!-- Placeholder Section 8 -->
-                    <div class="col-md-4 section">
-                        <img src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" alt="Placeholder 8" onclick="redirectTo('img.html')">
-                        <p>Upload Images</p>
-                    </div>
-                    <!-- Placeholder Section 9 -->
-                    <div class="col-md-4 section">
-                        <img src="https://th.bing.com/th/id/OIP.yY9X3U95HUJZuBRgUATStAAAAA?w=240&h=240&rs=1&pid=ImgDetMainhttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqF02Q7_6SYXLjJIYGLRgA0Mq9nflOEo5rhg&s" alt="Placeholder 9" onclick="redirectTo('#')">
-                        <p>Upload Videos</p>
-                    </div>
-                    <!-- Placeholder Section 10 -->
-                    <div class="col-md-4 section">
-                        <img src="https://th.bing.com/th/id/OIP.yY9X3U95HUJZuBRgUATStAAAAA?w=240&h=240&rs=1&pid=ImgDetMainhttps://www.iconpacks.net/icons/2/free-pdf-upload-icon-2619-thumb.png" alt="Placeholder 10" onclick="redirectTo('#')">
-                        <p>Upload Pdfs</p>
-                    </div>
-                </div>
-            </div>
-        
-            <script>
-                function redirectTo(page) {
-                    window.location.href = page;
+/* General styles */
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #040000;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Thumbnail styles */
+#thumbnailContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.thumbnail-container {
+    position: relative;
+    width: calc(50% - -100px); /* Adjust thumbnail width here */
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #000000; /* Border around thumbnails */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.thumbnail-container:hover {
+    transform: translateY(-5px); /* Lift thumbnail on hover */
+}
+
+.thumbnail-container img {
+    width: 500%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    object-fit: cover; /* Ensure images fit within their container */
+}
+
+.thumbnail-container img.locked-image {
+    width: 500px; /* Fixed size for locked images */
+    height: 200px; /* Set desired height */
+    object-fit: cover; /* Ensure images fit within their container */
+}
+
+.thumbnail-container img:hover {
+    transform: scale(1.05); /* Zoom effect on hover */
+}
+
+.locked-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail-container:hover .locked-overlay {
+    opacity: 1;
+}
+
+.thumbnail-container p {
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Password Popup styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    max-width: 400px;
+    width: 100%;
+}
+
+.popup h4 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #666;
+}
+
+#passwordInput {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+#passwordSubmit {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#passwordSubmit:hover {
+    background-color: #218838;
+}
+
+/* Loader animation */
+#loader {
+    text-align: center;
+    display: none;
+    margin-top: 10px;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#exitLogo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50px; /* Fixed width */
+        height: 50px; /* Fixed height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      #exitLogo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Maintain aspect ratio */
+      }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="no-copy">
+    <h2 class="text-center">Upload an Image</h2>
+    <form id="uploadForm" class="mb-4">
+        <a href="index.html" id="exitLogo">
+            <img src="https://t3.ftcdn.net/jpg/04/51/52/52/360_F_451525222_IKqxMEeAVBS6Pj5JpJU0MxnQAtasHZPe.jpg" alt="Exit Logo">
+          </a>
+        <div class="form-group">
+            <input type="file" id="imageInput" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" id="imageName" class="form-control" placeholder="Enter image name" required>
+        </div>
+        <div class="form-group">
+            <input type="password" id="imagePassword" class="form-control" placeholder="Create a password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+    <div id="thumbnailContainer" class="text-center"></div>
+</div>
+</div>
+<div id="passwordPopup" class="popup">
+    <h4 class="text-center">Enter Password</h4>
+    <button class="close-btn">&times;</button> <!-- Close button added -->
+    <input type="password" id="passwordInput" class="form-control mb-2">
+    <button id="passwordSubmit" class="btn btn-primary btn-block">Submit</button>
+    <div id="loader" class="text-center mt-2" style="display:none;">
+        <div class="loader"></div>
+        <span>Checking...</span>
+    </div>
+</div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+ $(document).ready(function() {
+    // Load existing images from localStorage on page load
+    loadImages();
+
+    // Function to load existing images from localStorage
+    function loadImages() {
+        const images = JSON.parse(localStorage.getItem('userImages')) || [];
+        images.forEach(imageData => {
+            addThumbnail(imageData.id, imageData.name);
+        });
+    }
+
+    // Function to handle form submission and image upload
+    $('#uploadForm').on('submit', function(e) {
+        e.preventDefault();
+        const file = $('#imageInput')[0].files[0];
+        const imageName = $('#imageName').val();
+        const imagePassword = $('#imagePassword').val();
+
+        // Validate file type
+        if (file && isValidImageFile(file)) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                const imageId = new Date().getTime();
+                // Check if image with the same name already exists
+                if (isImageNameAvailable(imageName)) {
+                    saveImage(imageId, imageName, imagePassword, imageData);
+                    addThumbnail(imageId, imageName); // Add thumbnail to display
+                    $('#uploadForm')[0].reset(); // Reset form fields
+                } else {
+                    alert('Image with the same name already exists. Please use a different name.');
                 }
-            </script>
-        
+            };
+            reader.readAsDataURL(file); // Read uploaded file as data URL
+        } else {
+            alert('Please select a valid image file (jpg, jpeg, png, gif).');
+        }
+    });
+
+    // Function to validate file type
+    function isValidImageFile(file) {
+        const acceptedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        return acceptedImageTypes.includes(file.type);
+    }
+
+    // Function to check if image name is available
+    function isImageNameAvailable(name) {
+        const images = JSON.parse(localStorage.getItem('userImages')) || [];
+        return images.every(img => img.name !== name);
+    }
+
+    // Function to save image data to localStorage permanently
+    function saveImage(id, name, password, data) {
+        let images = JSON.parse(localStorage.getItem('userImages')) || [];
+        images.push({
+            id: id,
+            name: name,
+            password: password,
+            data: data
+        });
+        localStorage.setItem('userImages', JSON.stringify(images));
+    }
+
+    // Function to add thumbnail of uploaded image
+    function addThumbnail(id, name) {
+    const thumbnailHtml = `
+        <div class="col-md-4">
+            <div class="thumbnail-container">
+                <img src="locked.png" class="img-thumbnail locked-image" data-id="${id}">
+                <div class="locked-overlay">Locked</div>
+                <p>${name}</p>
+            </div>
+            <button class="delete-btn btn btn-danger btn-block" data-id="${id}">Delete</button>
+        </div>
+    `;
+    $('#thumbnailContainer').append(thumbnailHtml); // Append thumbnail HTML
+}
+
+
+    // Event handler for clicking on a thumbnail to open password popup
+    $('#thumbnailContainer').on('click', '.thumbnail-container', function() {
+        const imageId = $(this).find('img').data('id');
+        $('#passwordPopup').data('image-id', imageId).show(); // Show password popup
+    });
+
+    // Event handler for clicking delete button to remove image
+    $('#thumbnailContainer').on('click', '.delete-btn', function(e) {
+        e.stopPropagation(); // Prevent click from bubbling to parent
+        const imageId = $(this).data('id');
+        deleteImage(imageId); // Delete image from localStorage and UI
+    });
+
+    // Event handler for closing the password popup
+    $('#passwordPopup').on('click', '.close-btn', function() {
+        $('#passwordPopup').hide();
+        $('#passwordInput').val(''); // Clear password input
+    });
+
+    // Event handler for submitting password to view image
+    $('#passwordSubmit').on('click', function() {
+        const imageId = $('#passwordPopup').data('image-id');
+        const enteredPassword = $('#passwordInput').val();
+        const images = JSON.parse(localStorage.getItem('userImages')) || [];
+        const imageData = images.find(img => img.id === imageId);
+        $('#loader').show(); // Show loader animation
+        setTimeout(() => {
+            $('#loader').hide(); // Hide loader animation after timeout
+            if (imageData && enteredPassword === imageData.password) {
+                $('#passwordPopup').hide(); // Hide password popup
+                const newWindow = window.open("", "ImageWindow", "width=600,height=400");
+                if (newWindow) {
+                    newWindow.document.write(`<img src="${imageData.data}" style="max-width: 100%; max-height: 100%;">`);
+                    // Check if new window is closed to lock image again
+                    const checkWindowClosed = setInterval(() => {
+                        if (newWindow.closed) {
+                            clearInterval(checkWindowClosed);
+                            lockImage(imageId); // Lock image after window is closed
+                        }
+                    }, 500);
+                } else {
+                    alert('Popup window blocked. Please allow popups for this site.');
+                }
+            } else {
+                alert('Wrong password'); // Show alert for wrong password
+            }
+        }, 5000); // Simulate checking process
+    });
+
+    // Function to lock image and clear password input
+    function lockImage(imageId) {
+        $('#passwordInput').val(''); // Clear password input
+        $('.thumbnail-container img[data-id="' + imageId + '"]').attr('src', 'locked.png'); // Lock image
+        $('.thumbnail-container img[data-id="' + imageId + '"]').siblings('.locked-overlay').show(); // Show locked overlay
+    }
+
+    // Function to delete image from localStorage and UI
+    function deleteImage(imageId) {
+        let images = JSON.parse(localStorage.getItem('userImages')) || [];
+        images = images.filter(img => img.id !== imageId);
+        localStorage.setItem('userImages', JSON.stringify(images));
+        $(`.delete-btn[data-id="${imageId}"]`).parent().remove(); // Remove thumbnail and delete button from UI
+    }
+
+    // Event listener for tracking user activity (closing window, device shutdown)
+    $(window).on('beforeunload', function() {
+        // Do not clear localStorage here to keep data permanent
+    });
+});
+
+   </script>
