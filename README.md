@@ -14,15 +14,9 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
+            background-color: black;
         }
-        body {
-            background-image: url('https://i.pinimg.com/originals/a0/95/79/a095793d809f2e134db9f8b3fb55ba95.gif');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-        }
+       
         .container {
             max-width: 1200px;
             margin: 50px auto;
