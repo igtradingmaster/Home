@@ -89,7 +89,7 @@
                 </div>
                 <!-- Txt Reader Section -->
                 <div class="col-md-4 section">
-                    <img src="https://media.istockphoto.com/id/1193039142/vector/sign-up-icon-isolated-on-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=wk4fcec72ODMyW292XmSJg3PqPAmW9-BtdWta91UhUU=" alt="Txt Reader" onclick="redirectTo('https://igtradingmaster.github.io/txtread/')">
+                    <img src="https://www.shutterstock.com/image-vector/closed-stamp-postal-silhouette-seal-600nw-1681677931.jpg" alt="Txt Reader" onclick="redirectTo('#')">
                     <p>Txt Reader</p>
                 </div>
                 <!-- Essay Writer Section -->
