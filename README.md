@@ -62,10 +62,70 @@
             -ms-user-select: none;
             user-select: none;
         }
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Background color for the rest of the page */
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensure it's above other content */
+}
+
+.popup {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.popup p {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.popup button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.popup button:hover {
+    background-color: #0056b3;
+}
+
     </style>
 </head>
 <body>
     <center>
+        <div class="popup-overlay">
+            <div class="popup">
+                
+                <h2>Application Closed</h2>
+                <p>This application is currently closed. Opening soon!</p>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-md-4 section">
@@ -124,6 +184,20 @@
         function redirectTo(page) {
             window.location.href = page;
         }
+        document.addEventListener('DOMContentLoaded', function() {
+    const popupOverlay = document.querySelector('.popup-overlay');
+    const closePopupBtn = document.getElementById('closePopup');
+
+    closePopupBtn.addEventListener('click', function() {
+        popupOverlay.style.display = 'none';
+    });
+
+    // Optionally, you can set a timer to automatically close the popup after a few seconds
+    setTimeout(function() {
+        popupOverlay.style.display = 'none';
+    }, 5000); // Close popup after 5 seconds (5000 milliseconds)
+});
+
     </script>
 </body>
 
