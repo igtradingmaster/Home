@@ -89,7 +89,7 @@
                 </div>
                 <!-- Txt Reader Section -->
                 <div class="col-md-4 section">
-                    <img src="https://www.shutterstock.com/image-vector/closed-stamp-postal-silhouette-seal-600nw-1681677931.jpg" alt="Txt Reader" onclick="redirectTo('#')">
+                    <img src="https://www.shutterstock.com/image-vector/closed-stamp-postal-silhouette-seal-600nw-1681677931.jpg" alt="Txt Reader" onclick="redirectTo('https://igtradingmaster.github.io/lengthfinder/')">
                     <p>Txt Reader</p>
                 </div>
                 <!-- Essay Writer Section -->
