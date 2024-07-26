@@ -6,6 +6,9 @@
   <title>Compact Calculator</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    h1{
+      display: none;
+      }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
