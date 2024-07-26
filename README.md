@@ -115,11 +115,11 @@
       .mobile-message {
         display: block;
         width: 100vw;
-        height: 100vh;
+        height: 1000vh;
         text-align: center;
         line-height: 100vh;
         background: #fff;
-        font-size: 24px;
+        font-size: 14px;
         color: #333;
       }
     }
