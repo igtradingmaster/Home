@@ -140,7 +140,7 @@
 </head>
 <body>
 
-  <div class="mobile-message">This website is optimized for PC and laptops only.</div>
+  <div class="mobile-message">This application is optimized for PC and laptops only.</div>
 
   <div class="calculator-container">
     <!-- Calculator Section -->
